@@ -6,7 +6,7 @@ class ClientRepository {
     connect: () => Promise<void>;
 
     constructor() {
-        this.client = createClient({ socket: { connectTimeout: 10000 } });
+        this.client = createClient({ socket: { connectTimeout: 20000 } });
 
         this.connect = async () => this.client.connect().catch((e) => console.error(e));
         this.connect();

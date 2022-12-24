@@ -8,6 +8,7 @@
     "lint": "eslint --cache --ext .js,.ts src",
     "lint:fix": "npm run lint -- --fix",
     "start:dev": "rimraf dist && copyfiles -f ./src/email-templates/*.* ./dist/email-templates && copyfiles -f ./src/docs/*.json ./dist/docs/ && tsc-watch --onSuccess \"nodemon ./src/app.ts\"",
+    "start:prod": "node app.js",
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/configs/ormconfig.ts",
     "migration:create": "typeorm migration:create",
     "migration:revert": "typeorm-ts-node-commonjs -d ./src/configs/ormconfig.ts migration:revert",

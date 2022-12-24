@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "start": "rimraf dist && copyfiles -f ./src/email-templates/*.* ./dist/email-templates && copyfiles -f ./src/docs/*.json ./dist/docs/ && tsc-watch --onSuccess \"npm run watch:server\"",
+    "start:dev": "rimraf dist && copyfiles -f ./src/email-templates/*.* ./dist/email-templates && copyfiles -f ./src/docs/*.json ./dist/docs/ && tsc-watch --onSuccess \"npm run watch:server\"",
+    "start:prod": "node app.js",
     "watch:server": "nodemon --watch src ./src/app.ts",
     "migration:run": "npx typeorm-ts-node-commonjs migration:run -d ./src/configs/ormconfig.ts",
     "migration:create": "typeorm migration:create",

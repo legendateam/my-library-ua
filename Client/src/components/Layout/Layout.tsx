@@ -95,7 +95,7 @@ export const Layout = () => {
                         });
 
                         if (checkRefreshOnJwtExpired.status === HttpStatusEnum.OK) {
-                            dispatch(addTokenPair({ tokenPair: tokenPairStorage }));
+                            dispatch(addTokenPair({ tokenPair: { ...data.data } }));
                             localStorage.removeItem(localStorageConstant.googleAuth);
                         }
                     } catch (e) {
