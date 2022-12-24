@@ -1,0 +1,7 @@
+.content {
+    padding: 0.5% 10%;
+}
+
+.blur__bg header, .blur__bg footer, .blur__bg main {
+    filter: blur(3px);
+}

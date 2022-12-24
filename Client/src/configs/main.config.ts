@@ -1,0 +1,21 @@
+export const mainConfig = {
+    ENVIRONMENT_VARIABLE: process.env.REACT_APP_ENVIRONMENT_VARIABLE || 'dev',
+    SERVER_URL: process.env.REACT_APP_SERVER_URL || 'http://localhost:2000',
+    ANALYTICS_URL: process.env.REACT_APP_ANALYTICS_URL || 'http://localhost:2100',
+
+    DOMAIN_NAME: process.env.REACT_APP_DOMAIN_NAME || 'https://my-domain.ua',
+    PROJECT_NAME: process.env.REACT_APP_PROJECT_NAME || 'my-project',
+
+    CLOUD_DOMAIN_NAME: process.env.REACT_APP_CLOUD_DOMAIN_NAME,
+
+    ROOT_EMAIL: process.env.REACT_APP_ROOT_EMAIL,
+
+    GOOGLE_CLIENT_ID: process.env.REACT_APP_GOOGLE_CLIENT_ID,
+    GOOGLE_SECRET_KEY: process.env.REACT_APP_GOOGLE_SECRET_KEY,
+    GOOGLE_FILE_VIEWER: process.env.REACT_APP_GOOGLE_FILE_VIEWER || 'https://docs.google.com/viewerng/viewer?url=',
+    CLOUD_DOMAIN_NAME_FOR_FILES: process.env.REACT_APP_CLOUD_DOMAIN_NAME_FOR_FILES,
+
+    REACT_APP_SECRET_ACCESS_KEY: process.env.REACT_APP_SECRET_ACCESS_KEY,
+    REACT_APP_SECRET_REFRESH_KEY: process.env.REACT_APP_SECRET_REFRESH_KEY,
+    REACT_APP_SECRET_FORGOT_PASSWORD_KEY: process.env.REACT_APP_SECRET_FORGOT_PASSWORD_KEY,
+};

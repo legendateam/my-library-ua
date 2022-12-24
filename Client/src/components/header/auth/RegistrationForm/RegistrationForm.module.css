@@ -1,0 +1,236 @@
+.header__auth_registration {
+    position: absolute;
+    left: 33vw;
+    top: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    flex-direction: column;
+    height: 500px;
+    width: 500px;
+    max-width: 600px;
+    max-height: 600px;
+    z-index: 2;
+    border-radius: 20px;
+    background-color: inherit;
+    -webkit-box-shadow: 0px 0px 15px 3px #000000;
+    box-shadow: 0px 0px 15px 3px #000000;
+}
+
+.header__auth_form_registration {
+    max-width: 600px;
+    width: 400px;
+    max-height: 600px;
+    height: 400px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 15px;
+}
+
+.header__auth_form_btn {
+    border: none;
+    background-color: inherit;
+    font-size: 16px;
+}
+
+.header__auth_registration_form_close_icon {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+}
+
+.header__auth_registration_form_close_icon:hover {
+    cursor: pointer;
+}
+
+.header__auth_registration_form_label {
+    width: 100%;
+    display: flex;
+    height: 140px;
+    flex-direction: column;
+    row-gap: 6px;
+    position: relative;
+}
+
+.header__auth_registration_form_label input {
+    height: 35px;
+    box-sizing: border-box;
+    padding-left: 18px;
+    font-size: 16px;
+}
+
+.header__auth_registration_form_label > input:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+.header__auth_registration_form_label_input_bg {
+    border: 1px solid black;
+}
+
+.header__auth_registration_form_label_input_error_bg {
+    border: 2px solid red;
+}
+
+.header__auth_registration_form_span_error_message, .header__auth_registration_form_not_required,
+.header__auth_registration_form_span_successfully_message {
+    font-size: 13px;
+    font-style: oblique;
+}
+
+.header__auth_registration_form_span_successfully_message {
+    color: green;
+}
+
+.header__auth_registration_form_warning_amber_icon {
+    position: absolute;
+    bottom: 6px;
+    right: 10px;
+}
+
+.header__auth_registration_form_close_icon:hover, .header__auth_registration_form_span_error_message, .header__auth_registration_form_warning_amber_icon {
+    color: red;
+}
+
+.header__auth_registration_form_btn_submit:not(:checked) {
+    pointer-events: none;
+    color:gray;
+    background-color: rgba(21, 20, 20, 0.27);
+}
+
+.header__auth_registration_form_visibility_icon {
+    position: absolute;
+    bottom: 6px;
+    right: 40px;
+}
+
+.header__auth_registration_form_visibility_icon:hover {
+    cursor: pointer;
+}
+
+.header__auth_registration_form_label_avatar {
+    width: 100%;
+}
+
+.visibility__on_password_icon {
+}
+
+.visibility__off_password_icon {
+}
+
+.visibility__on_confirmPassword_icon {
+}
+
+.visibility__off_confirmPassword_icon {
+}
+
+@media screen and (min-width: 850px) and (max-width: 992px){
+    .header__auth_registration  {
+        left: 23vw;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 850px){
+    .header__auth_registration  {
+        left: 19vw;
+    }
+}
+
+@media screen and (min-width: 660px) and (max-width: 768px){
+    .header__auth_registration  {
+        left: 15vw;
+    }
+}
+
+@media screen and (min-width: 630px) and (max-width: 660px){
+    .header__auth_registration  {
+        left: 12vw;
+    }
+}
+
+@media screen and (min-width: 576px) and (max-width: 630px){
+    .header__auth_registration  {
+        left: 7vw;
+    }
+}
+
+
+@media screen and (min-width: 550px) and (max-width: 576px){
+    .header__auth_registration  {
+        left: 5vw;
+    }
+}
+
+
+@media screen and (min-width: 540px) and (max-width: 550px){
+    .header__auth_registration  {
+        left: 6vw;
+        width: 480px;
+    }
+}
+
+@media screen and (min-width: 500px) and (max-width: 540px){
+    .header__auth_registration  {
+        left: 7vw;
+        width: 450px;
+    }
+}
+
+@media screen and (min-width: 480px) and (max-width: 500px){
+    .header__auth_registration  {
+        left: 4vw;
+        width: 450px;
+    }
+}
+
+@media screen and (min-width: 440px) and (max-width: 480px){
+    .header__auth_form_registration {
+        width: 340px;
+    }
+    .header__auth_registration  {
+        left: 7vw;
+        width: 400px;
+    }
+}
+
+@media screen and (min-width: 423px) and (max-width: 440px){
+    .header__auth_form_registration {
+        width: 300px;
+    }
+    .header__auth_registration  {
+        left: 10vw;
+        width: 350px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 423px){
+    .header__auth_form_registration {
+        width: 290px;
+    }
+    .header__auth_registration  {
+        left: 11vw;
+        width: 330px;
+    }
+}
+
+@media screen and (min-width: 370px) and (max-width: 400px){
+    .header__auth_form_registration {
+        width: 270px;
+    }
+    .header__auth_registration  {
+        left: 9vw;
+        width: 320px;
+    }
+}
+
+@media screen and (max-width: 370px){
+    .header__auth_form_registration {
+        width: 250px;
+    }
+    .header__auth_registration  {
+        left: 6vw;
+        width: 320px;
+    }
+}

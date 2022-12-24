@@ -1,0 +1,72 @@
+.admin__page {
+    padding: 40px 3.5%;
+}
+
+.admin__page_wrap_forms {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    row-gap: 60px;
+    justify-content: space-evenly;
+}
+
+.admin__page_form {
+    margin-top: 65px;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    justify-content: center;
+    row-gap: 25px;
+    width: 300px;
+}
+
+.admin__page_btn {
+    width: 200px;
+}
+
+.admin__page_p_info {
+    margin: 0;
+    padding: 0;
+}
+
+.admin__page_wrap_btn {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.admin__page_btn_submit {
+    height: 50px;
+}
+
+.admin__page_form_error {
+    color: red;
+    margin-top: 4px;
+    font-size: 14px;
+}
+
+.admin__page_form_success_message {
+    font-size: 14px;
+    color: green;
+}
+
+.admin__page_form_failed_message {
+    font-size: 14px;
+    color: #ffff02;
+}
+
+.admin__page_form_text_field_input {
+    width: 400px;
+}
+
+@media screen and (min-width: 460px) and (max-width: 576px){
+    .admin__page_form_text_field_input {
+        width: 340px;
+    }
+}
+
+@media screen and (max-width: 460px){
+    .admin__page_form_text_field_input {
+        width: 300px;
+    }
+}

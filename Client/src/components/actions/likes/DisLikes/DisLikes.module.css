@@ -1,0 +1,11 @@
+
+
+.dis__likes_count {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+.dis__likes_active:hover {
+    cursor: pointer;
+}

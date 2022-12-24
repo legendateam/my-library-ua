@@ -1,0 +1,8 @@
+export enum EmailEnum {
+    WELCOME,
+    WELCOME_BACK,
+    FORGOT_PASSWORD,
+    CHANGE_PASSWORD,
+    GOOGLE_WELCOME,
+    UPDATE_USER_DATA,
+}

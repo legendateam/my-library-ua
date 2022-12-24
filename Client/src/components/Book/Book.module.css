@@ -1,0 +1,12 @@
+.book {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    align-items: center;
+    justify-content: center;
+}
+
+.book__admin_icons {
+    position: relative;
+    top: 30px;
+}

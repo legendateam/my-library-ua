@@ -1,0 +1,37 @@
+.edit__book_form_btn, .edit__book_form_btn_submit {
+    width: 230px;
+    height: 50px;
+    text-align: center;
+}
+
+.edit__book_form_wrap_btn {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+    align-items: center;
+}
+
+.edit__book_form_wrap_btn img {
+    height: 280px;
+    width: 200px;
+}
+
+.edit__book_form_btn_submit {
+    height: 55px;
+}
+
+.edit__book_form_wrap_submit_btn {
+    margin-top: 30px;
+}
+
+.edit__book_form_success_message {
+    font-size: 14px;
+    color: green;
+    margin-bottom: 10px;
+}
+
+.edit__book_form_failed_message {
+    font-size: 14px;
+    color: #ffff02;
+    margin-bottom: 10px;
+}

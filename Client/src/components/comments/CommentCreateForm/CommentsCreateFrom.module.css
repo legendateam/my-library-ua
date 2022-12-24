@@ -1,0 +1,24 @@
+.comments__create {
+    margin-top: 35px;
+    box-sizing: border-box;
+    width: 61.5%;
+}
+
+.comments__create_form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 8px;
+}
+
+.comments__create_form_text {
+    resize: none;
+    margin-top: 20px;
+    padding: 20px;
+    box-sizing: border-box;
+    width: 100%;
+    height: 100px;
+}
+
+.comments__create_form_err {
+    color: red;
+}

@@ -1,0 +1,13 @@
+.analytics__page {
+    padding: 40px 3.5%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    row-gap: 60px;
+}
+
+.analytics__block {
+    display: flex;
+    flex-direction: column;
+    row-gap: 40px;
+}

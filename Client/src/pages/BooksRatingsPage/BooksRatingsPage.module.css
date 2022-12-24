@@ -1,0 +1,58 @@
+.books_ratings__page {
+    padding: 40px 3.5%;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 38px;
+}
+
+.books_ratings__page__pagination {
+    justify-content: flex-end;
+    display: flex;
+    width: 100%;
+    margin-top: 40px;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    .books_ratings__page__pagination {
+        margin-left: 110px;
+    }
+}
+
+@media screen and (min-width: 1297px) and (max-width: 1328px){
+    .books_ratings__page {
+        gap: 30px;
+    }
+}
+
+@media screen and (min-width: 1223px) and (max-width: 1297px){
+    .books_ratings__page {
+        gap: 10px;
+    }
+}
+
+@media screen and (min-width: 1199px) and (max-width: 1223px){
+    .books_ratings__page {
+        padding: 40px 0 3.5% 0;
+    }
+}
+
+
+@media screen and (max-width: 1223px){
+    .books_ratings__page {
+        gap: 0;
+    }
+}
+
+@media screen and (max-width: 1199px){
+    .books_ratings__page {
+        padding-top: 40px;
+        padding-bottom: 100px;
+    }
+}
+
+@media screen and (max-width: 850px) {
+    .books_ratings__page {
+        justify-content: center;
+    }
+}

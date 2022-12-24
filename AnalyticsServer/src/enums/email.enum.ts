@@ -1,0 +1,6 @@
+export enum EmailEnum {
+    ANALYTICS_DAY,
+    ANALYTICS_WEEK,
+    ANALYTICS_MONTH,
+    ANALYTICS_YEAR
+}

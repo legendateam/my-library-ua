@@ -1,0 +1,64 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2021": true
+    },
+    "extends": [
+        "plugin:react/recommended",
+        "airbnb"
+    ],
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+        "ecmaFeatures": {
+            "jsx": true
+        },
+        "ecmaVersion": "latest"
+    },
+    "plugins": [
+        "react",
+        "@typescript-eslint"
+    ],
+    "rules": {
+        "import/extensions": [
+            "error",
+            {
+                "js": "never",
+                "ts": "never",
+                "jsx": "never",
+                "tsx": "never"
+            }
+        ],
+        "indent": ["error", 4],
+        "no-restricted-globals": "off",
+        "react/jsx-props-no-spreading": "off",
+        "max-len": ["error", { "code": 140 }],
+        "no-shadow": "off",
+        "no-unused-vars": "off",
+        "no-underscore-dangle": "off",
+        "class-methods-use-this": "off",
+        "no-param-reassign": ["error", { "props": false }],
+        "jsx-a11y/anchor-is-valid": 0,
+        "default-case": ["error", { "commentPattern": "^skip\\sdefault" }],
+        "no-unused-expressions": ["error", { "allowTernary": true }],
+        "jsx-quotes": ["error", "prefer-single"],
+        "camelcase": "warn",
+        "consistent-return": "off",
+        "no-use-before-define": ["error", { "variables": false }],
+        "import/prefer-default-export": "off",
+        "react/jsx-indent": ["error", 4],
+        "react/jsx-one-expression-per-line": "off",
+        "react/jsx-filename-extension": [2, { "extensions": [".js", ".jsx", ".ts", ".tsx"] }],
+        "react/jsx-indent-props": "off",
+        "react/function-component-definition": [2, {
+            "namedComponents": "arrow-function"
+        }]
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+                "extensions": [".js",".ts", ".tsx", ".jsx"]
+            }
+        }
+    }
+}

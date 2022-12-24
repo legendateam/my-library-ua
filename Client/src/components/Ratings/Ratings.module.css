@@ -1,0 +1,9 @@
+.ratings {
+    display: flex;
+}
+
+.ratings p {
+    margin-left: 10px;
+    color: red;
+    font-size: 12px;
+}

@@ -1,0 +1,62 @@
+.nav__main {
+    width: 60%;
+}
+
+.nav__main ul {
+    list-style: none;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.nav__main ul li {
+    position: relative;
+    cursor: pointer;
+    line-height: 1; /*висота стрічки*/
+}
+
+.nav__main ul li:after {
+    display: block;
+    position: absolute;
+    top: 25px;
+    left: 0; /*замінити на right:0;, для того що би змінити направлення підкреслення*/
+    width: 0;/*задаєм довжину лінії до наведення курсора*/
+    height: 2px; /*задаємо ширину лінії*/
+    background-color: white; /*задаём колір лінії*/
+    content: "";
+    transition: width 0.3s ease-out; /*задаємо час анімації*/
+}
+
+.nav__main ul li:hover:after,
+.nav__main ul li:focus:after {
+    width: 100%; /*ширина підкреслення текста*/
+}
+
+.nav__main ul li a[class = 'active']:before {
+    display: block;
+    position: absolute;
+    top: 25px;
+    left: 0; /*замінити на right:0;, для того що би змінити направлення підкреслення*/
+    width: 100%;/*задаєм довжину лінії до наведення курсора*/
+    height: 2px; /*задаємо ширину лінії*/
+    background-color: white; /*задаём колір лінії*/
+    content: "";
+}
+
+@media screen and (min-width: 769px) and (max-width: 1049px) {
+    .nav__main ul {
+        gap: 20px;
+    }
+}
+
+@media screen and (min-width: 575px) and (max-width: 768px) {
+    .nav__main ul {
+        gap: 15px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .nav__main {
+        display: none;
+    }
+}

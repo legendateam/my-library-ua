@@ -1,0 +1,128 @@
+.header__auth_login {
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    flex-direction: column;
+    box-sizing: border-box;
+    width: 500px;
+    background-color: inherit;
+}
+
+.header__auth__login_form {
+    width: 400px;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.header__auth_login_form_close_icon {
+    position: absolute;
+    top: 13px;
+    right: 15px;
+}
+
+.header__auth_login_form_close_icon:hover {
+    cursor: pointer;
+}
+
+.header__auth_login_form_label {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    height: 100px;
+    row-gap: 6px;
+    position: relative;
+}
+
+.header__auth_login_form_label input {
+    height: 35px;
+    box-sizing: border-box;
+    padding-left: 18px;
+    font-size: 16px;
+}
+
+.header__auth_login_form_label > input:focus {
+    outline: 2px solid rgba(0, 0, 0, 0.6);
+}
+
+.header__auth_login_form_label_input_bg {
+    border: 1px solid black;
+}
+
+.header__auth_login_form_label_input_error_bg {
+    border: 2px solid red;
+}
+
+.header__auth_login_form_span_error_message {
+    font-size: 13px;
+    font-style: oblique;
+}
+
+.header__auth_login_form_warning_amber_icon {
+    position: absolute;
+    bottom: 43px;
+    right: 10px;
+}
+
+.header__auth_login_form_close_icon:hover, .header__auth_login_form_span_error_message, .header__auth_login_form_warning_amber_icon {
+    color: red;
+}
+
+.header__auth_login_form_btn_submit:not(:checked) {
+    pointer-events: none;
+    color:gray;
+    background-color: rgba(21, 20, 20, 0.27);
+}
+
+.header__auth_login_form_visibility_icon {
+    position: absolute;
+    bottom: 43px;
+    right: 40px;
+}
+
+.header__auth_login_form_visibility_icon:hover {
+    cursor: pointer;
+}
+
+.header__auth_form_login {
+    height: 255px;
+    display: block;
+}
+
+.visibility__on_login_password_icon {
+}
+
+.visibility__off_login_password_icon {
+}
+
+@media screen and (max-width: 550px){
+    .header__auth_login {
+        width: 100%;
+    }
+}
+
+@media screen  and (min-width: 450px)  and (max-width: 480px) {
+    .header__auth__login_form {
+        width: 350px;
+    }
+}
+
+@media screen  and (min-width: 423px)  and (max-width: 450px) {
+    .header__auth__login_form {
+        width: 300px;
+    }
+}
+
+@media screen  and (min-width: 400px)  and (max-width: 423px) {
+    .header__auth__login_form {
+        width: 280px;
+    }
+}
+
+@media screen  and (max-width: 400px) {
+    .header__auth__login_form {
+        width: 260px;
+    }
+}

@@ -1,0 +1,86 @@
+.header__nav_genres > div > button {
+    margin: 0;
+    padding: 0;
+    width: 0;
+    height: 0;
+}
+
+.header__nav_genres_typography {
+    display: flex;
+    flex-wrap: wrap;
+    width: 555px;
+    box-sizing: border-box;
+    padding: 25px;
+    gap: 10px;
+    position: relative;
+    z-index: 9999;
+    background-color: inherit;
+}
+
+.header__nav_genres_position{
+    position: absolute;
+    top: 22px;
+}
+
+@media screen and (min-width: 475px) and (max-width: 575px) {
+    .header__nav_genres_position {
+        left: -300px;
+        z-index: 8888;
+    }
+
+    .header__nav_genres_typography {
+        width: 300px;
+        justify-content: center;
+    }
+}
+
+@media screen and (min-width: 458px) and (max-width: 475px) {
+    .header__nav_genres_position {
+        left: -285px;
+        z-index: 8888;
+    }
+
+    .header__nav_genres_typography {
+        width: 285px;
+        justify-content: center;
+    }
+}
+
+@media screen and (min-width: 450px) and (max-width: 458px) {
+    .header__nav_genres_position {
+        left: -275px;
+        z-index: 8888;
+    }
+
+    .header__nav_genres_typography {
+        width: 275px;
+        justify-content: center;
+        padding: 10px;
+    }
+}
+
+@media screen and (min-width: 435px) and (max-width: 450px) {
+    .header__nav_genres_position {
+        left: -252px;
+        z-index: 8888;
+    }
+
+    .header__nav_genres_typography {
+        width: 250px;
+        justify-content: center;
+        padding: 10px;
+    }
+}
+
+@media screen and (max-width: 435px) {
+    .header__nav_genres_position {
+        left: -228px;
+        z-index: 8888;
+    }
+
+    .header__nav_genres_typography {
+        width: 230px;
+        justify-content: center;
+        padding: 7px;
+    }
+}

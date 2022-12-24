@@ -1,0 +1,26 @@
+.update__book {
+    width: 30px;
+    height: 30px;
+    border-radius: 4px;
+    position: absolute;
+    display: flex;
+    background-color: cornflowerblue;
+    justify-content: center;
+    align-items: center;
+}
+
+.update__book:hover {
+    cursor: pointer;
+}
+
+.update__link_book {
+   color: inherit;
+    text-decoration: none;
+}
+
+@media screen and (max-width: 570px) {
+    .update__book {
+        width: 60px;
+        height: 60px;
+    }
+}

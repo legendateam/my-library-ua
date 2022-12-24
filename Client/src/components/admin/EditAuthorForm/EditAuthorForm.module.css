@@ -1,0 +1,37 @@
+.edit__author_form_error_message {
+    color: #dc0d0d;
+    font-size: 14px;
+    margin-bottom: 10px;
+}
+
+.edit__author_form_btn, .edit__author_form_btn_submit {
+    width: 230px;
+    height: 50px;
+    text-align: center;
+}
+
+.edit__author_form_btn {
+    margin-top: 35px;
+}
+
+.edit__author_form_wrap_btn , .edit__author_form_wrap_submit_btn{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    row-gap: 16px;
+}
+
+.edit__author_form_wrap_btn img {
+    height: 280px;
+    width: 200px;
+}
+
+.edit__author_form_btn_submit {
+    height: 55px;
+}
+
+.edit__author_form_success_message {
+    font-size: 14px;
+    color: green;
+    margin-bottom: 10px;
+}

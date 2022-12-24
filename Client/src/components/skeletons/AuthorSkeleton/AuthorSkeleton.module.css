@@ -1,0 +1,24 @@
+.authors__page_skeleton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 210px;
+    height: 310px;
+}
+
+.authors__page_skeleton_author {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 15px;
+    width: 200px;
+    height: 300px;
+}
+
+.authors__page_skeleton_author__info {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+    align-items: center;
+}

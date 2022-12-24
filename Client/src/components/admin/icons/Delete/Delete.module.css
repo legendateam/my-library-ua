@@ -1,0 +1,33 @@
+.delete__book {
+    width: 30px;
+    height: 30px;
+    background-color: red;
+    border-radius: 4px;
+    position: absolute;
+    display: flex;
+    left: 40px;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.delete__book:hover {
+    cursor: pointer;
+}
+
+@media screen and (min-width: 480px) and (max-width: 570px) {
+    .delete__book {
+        width: 60px;
+        height: 60px;
+        left: 80px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .delete__book {
+        width: 60px;
+        height: 60px;
+        left: 0;
+        top: 70px;
+    }
+}

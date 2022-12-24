@@ -1,0 +1,32 @@
+.header__nav_genre {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    justify-content: center;
+    background-color: #FF5A6F;
+}
+.header__nav_genre:hover {
+    cursor: pointer;
+    background-color: #fd3752;
+}
+
+.header__nav_genre_dark {
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    justify-content: center;
+    background-color: #323639;
+}
+.header__nav_genre_dark:hover {
+    cursor: pointer;
+    background-color: #2b2d2f;
+}
+
+@media screen and (max-width: 458px) {
+    .header__nav_genre, .header__nav_genre_dark {
+        padding: 8px;
+    }
+}

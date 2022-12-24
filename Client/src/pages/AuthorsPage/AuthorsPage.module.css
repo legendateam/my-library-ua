@@ -1,0 +1,26 @@
+.authors__page {
+    padding: 40px 3.5%;
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+}
+
+.authors__page__pagination {
+    justify-content: flex-end;
+    display: flex;
+    width: 100%;
+    margin-top: 40px;
+}
+
+@media screen and (min-width: 1390px) and (max-width: 1412px){
+    .authors__page {
+        gap: 10px;
+    }
+}
+
+@media screen and (min-width: 1223px) and (max-width: 1390px){
+    .authors__page {
+        column-gap: 35px;
+    }
+}

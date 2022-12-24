@@ -1,0 +1,13 @@
+.comments__list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+}
+
+.comments__pagination {
+    display: flex;
+    position: absolute;
+    justify-content: flex-end;
+    right: 15%;
+}

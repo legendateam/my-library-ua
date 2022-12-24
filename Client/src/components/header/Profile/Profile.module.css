@@ -1,0 +1,133 @@
+.header__profile {
+    display: flex;
+    align-items: center;
+    width: fit-content;
+    height: 50px;
+}
+
+.header__profile button {
+    display: flex;
+    column-gap: 10px;
+    align-items: center;
+    font-size: 16px;
+    width: 100%;
+    border: none;
+    position: relative;
+    background-color: inherit;
+    cursor: pointer;
+}
+
+.header__profile_avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.header__profile_list {
+    position: absolute;
+    z-index: 100;
+    top: 75px;
+    right: 213px;
+}
+
+.header__profile_list_dark {
+    position: absolute;
+    top: 75px;
+    right: 213px;
+    z-index: 100;
+}
+
+.header__profile_list span, .header__profile_list svg {
+    color: black;
+}
+
+.header__mobile {
+    display: none;
+}
+
+@media screen and (min-width: 992px) and (max-width: 1199px) {
+    .header__profile_list {
+        right: 163px;
+    }
+}
+
+@media screen and (min-width: 900px) and (max-width: 992px) {
+    .header__profile_list {
+        right: 170px;
+    }
+
+    .header__profile_list_dark {
+        right: 170px;
+    }
+}
+
+@media screen and (min-width: 800px) and (max-width: 900px) {
+    .header__profile_list {
+        right: 150px;
+    }
+
+    .header__profile_list_dark {
+        right: 150px;
+    }
+}
+
+@media screen and (min-width: 650px) and (max-width: 800px) {
+    .header__profile_list {
+        right: 120px;
+    }
+
+    .header__profile_list_dark {
+        right: 120px;
+    }
+}
+
+@media screen and (max-width: 650px) {
+    .header__profile_nickname {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .header__mobile {
+        display: block;
+    }
+
+    .header__mobile_genres {
+        color: black;
+    }
+
+    .header__mobile_genres_dark {
+        color: white;
+    }
+}
+
+@media screen and (min-width: 450px) and (max-width: 650px) {
+    .header__profile_list {
+        right: 100px;
+    }
+
+    .header__profile_list_dark {
+        right: 100px;
+    }
+}
+
+@media screen and (min-width: 400px) and (max-width: 450px) {
+    .header__profile_list {
+        right: 70px;
+    }
+
+    .header__profile_list_dark {
+        right: 70px;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .header__profile_list {
+        right: 50px;
+    }
+
+    .header__profile_list_dark {
+        right: 50px;
+    }
+}

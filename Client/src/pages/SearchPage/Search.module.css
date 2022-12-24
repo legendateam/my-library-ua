@@ -1,0 +1,35 @@
+.search__page {
+    padding: 40px 2%;
+    display: flex;
+    flex-direction: column;
+    row-gap: 70px;
+    width: 100%;
+}
+
+.search__page_wrap {
+    display: flex;
+    flex-direction: column;
+    row-gap: 30px;
+    justify-content: center;
+    width: 100%;
+}
+
+.search__page_authors {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 20px;
+}
+
+.search__page_books {
+    display: flex;
+    flex-wrap: wrap;
+    row-gap: 38px;
+    width: 100%;
+}
+
+.not__found_search {
+    display: flex;
+    justify-content: center;
+    padding-bottom: 140px;
+}

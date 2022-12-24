@@ -1,0 +1,15 @@
+export enum KeyValidationErrorEnum {
+    STRING_BASE='string.base',
+    STRING_EMPTY='string.empty',
+    STRING_MIN='string.min',
+    STRING_MAX='string.max',
+    STRING_PATTERN='string.pattern.base',
+    ANY_REQUIRED='any.required',
+    NUMBER_BASE='number.base',
+    NUMBER_EMPTY='number.empty',
+    NUMBER_MIN='number.min',
+    NUMBER_MAX='number.max',
+    AUTH_REGISTRATION='AUTH_REGISTRATION',
+    STRING_PATTERN_INVERT_BASE='string.pattern.invert.base',
+    STRING_PATTERN_INVERT_NAME='string.pattern.invert.name',
+}
