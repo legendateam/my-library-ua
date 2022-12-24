@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.willReadRouter = void 0;
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const middlewares_1 = require("../middlewares");
+exports.willReadRouter = (0, express_1.Router)();
+exports.willReadRouter.get('/:clientKey', middlewares_1.authMiddleware.isAuthorization, middlewares_1.willReadMiddleware.checkParamsOnClientKey, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.checkUserAuthByPayload, controllers_1.willReadController.getOneByUserId);
+exports.willReadRouter.post('/', middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.willReadMiddleware.validateBody, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.willReadMiddleware.checkBooksById, middlewares_1.willReadMiddleware.checkUniqueByUserId, controllers_1.willReadController.createOne);
+exports.willReadRouter.patch('/', middlewares_1.willReadMiddleware.checkQuery, middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.willReadMiddleware.validateBody, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.willReadMiddleware.checkBooksById, middlewares_1.willReadMiddleware.checkExistsByUserId, controllers_1.willReadController.updateOne);
+exports.willReadRouter.delete('/', middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.isClientKey, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.willReadMiddleware.checkExistsByUserId, controllers_1.willReadController.deleteOne);
+//# sourceMappingURL=will-read.router.js.map

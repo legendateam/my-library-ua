@@ -31,6 +31,23 @@
 /AnalyticsServer/package-lock.json
 /AnalyticsServer/.env
 
+# ProdJS
+/awsjs/.env.-db
+/awsjs/.env.-redis
+/awsjs/.env.-web
+
+# ProdJS Server
+/awsjs/Server/node_modules
+/awsjs/Server/package-lock.json
+/awsjs/Server/.env
+/awsjs/Server/my-library-ua.json
+
+# ProdJS Analytics Server
+/awsjs/AnalyticsServer/dist
+/awsjs/AnalyticsServer/node_modules
+/awsjs/AnalyticsServer/package-lock.json
+/awsjs/AnalyticsServer/.env
+
 # Project exclude paths
 /Client/src/enums/role/role.enum.js
 /Client/src/enums/role/role.enum.js.map

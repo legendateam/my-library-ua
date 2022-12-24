@@ -1,0 +1,304 @@
+{
+	"info": {
+		"_postman_id": "21a65508-03d3-4b84-b0a0-38f6a730a1c7",
+		"name": "My-ua-libraty-analytics",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17155101"
+	},
+	"item": [
+		{
+			"name": "Views",
+			"item": [
+				{
+					"name": "Create firtst view analytic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{local_host}}/views",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"views"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Analytics Views",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local_host}}/views",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"views"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Analytics Views Date",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local_host}}/views?date=2022-11-19T07:34:12.546Z",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"views"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2022-11-19T07:34:12.546Z"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update firtst analytic view Copy",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{local_host}}/views",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"views"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Analytics Views",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local_host}}/views/2022-11-19T07:34:12.546Z",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"views",
+								"2022-11-19T07:34:12.546Z"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Files",
+			"item": [
+				{
+					"name": "Create files analytic",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"readNumbers\": false,\r\n    \"downloadNumbers\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local_host}}/files",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Analytics Files",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local_host}}/files",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Analytics Files Date",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local_host}}/files?date=2022-11-19T07:34:12.546Z",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"files"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2022-11-19T07:34:12.546Z"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update firtst analytic files",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"readNumbers\": false,\r\n    \"downloadNumbers\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{local_host}}/files",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"files"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get One Analytics Files",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "",
+								"value": "",
+								"type": "text",
+								"disabled": true
+							}
+						],
+						"url": {
+							"raw": "{{local_host}}/files/2022-11-19T07:34:12.546Z",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"files",
+								"2022-11-19T07:34:12.546Z"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "get count users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local_host}}/users",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get count new users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{local_host}}/users/2022-11-19T07:34:12.546Z",
+							"host": [
+								"{{local_host}}"
+							],
+							"path": [
+								"users",
+								"2022-11-19T07:34:12.546Z"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

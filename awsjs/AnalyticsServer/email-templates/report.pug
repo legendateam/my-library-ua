@@ -1,0 +1,12 @@
+extends layout
+block content
+    div
+        h2 #{mainMessage}
+
+        ul
+            li Кількість відвідувань: #{views}
+            li Кількість відвудувань авторизованими користувачами: #{auth_views}
+            li Кількість унікальних користувачів, які відвідали сайт: #{unique_views}
+            li Кількість завантажених книг: #{downloadNumbers}
+            li Кількість прочитаних онлайн книг: #{readNumbers}
+            li Кількість нових зареєстрованих користувачів: #{countUsers}

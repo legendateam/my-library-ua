@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.commentsRouter = void 0;
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const middlewares_1 = require("../middlewares");
+exports.commentsRouter = (0, express_1.Router)();
+exports.commentsRouter.get('/', middlewares_1.paginationMiddleware.checkQuery, controllers_1.commentsController.getAll);
+exports.commentsRouter.post('/', middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.commentMiddleware.validateBody, middlewares_1.commentMiddleware.checkBookExistsById, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.commentMiddleware.checkAlreadyExists, controllers_1.commentsController.createOne);
+exports.commentsRouter.post('/likes', middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.commentMiddleware.validateBodyActions, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.commentMiddleware.isCommentExists, middlewares_1.commentMiddleware.isActionsUnique, controllers_1.commentsController.addAction);
+exports.commentsRouter.get('/likes/:id', middlewares_1.commentMiddleware.checkParamsById, controllers_1.commentsController.getOneActions);
+exports.commentsRouter.patch('/likes/:id', middlewares_1.commentMiddleware.checkParamsById, middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.commentMiddleware.validateUpdateBodyActions, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.commentMiddleware.checkActionsExists, controllers_1.commentsController.updateAction);
+exports.commentsRouter.delete('/likes/:id', middlewares_1.commentMiddleware.checkParamsById, middlewares_1.authMiddleware.isClientKey, middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.commentMiddleware.checkActionsExists, controllers_1.commentsController.removeAction);
+//# sourceMappingURL=comments.router.js.map

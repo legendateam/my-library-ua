@@ -1,0 +1,662 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "my-ua-library analytics",
+        "contact": {
+            "name": "Yura Cheban",
+            "url": "https://github.com/legendateam"
+        },
+        "version": "1.0",
+        "description": "Documentation for analytics part"
+    },
+    "paths": {
+        "/views": {
+            "get": {
+                "operationId": "getAll Views",
+                "description": "get visits statistics auth users, unique users, and any views",
+                "tags": ["Views"],
+                "parameters": [
+                    {
+                        "name": "date",
+                        "type": "string",
+                        "in": "query",
+                        "description": "date for get statistics gte than date in db",
+                        "pattern": "2022-11-19T07:34:12.546Z",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK",
+                                    "description": "default good response message"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": "200",
+                                    "description": "default error status"
+                                },
+                                "data": {
+                                    "description": "get all views",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/views"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "get an analyst for all the time"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "default error"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "create new Views",
+                "description": "Create first to day statistics by visits auth users, unique users, and any views. Api independently will check for a unique visit",
+                "tags": ["Views"],
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": false,
+                        "in": "body",
+                        "description": "when the user is an authorized, must indicate it id",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "type": "number",
+                                    "minimum": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "CREATED"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": "201"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/views"
+                                }
+                            }
+                        },
+                        "description": "created views today"
+                    },
+                    "409": {
+                        "schema": {
+                            "$ref": "#/definitions/conflictErrorResponse"
+                        },
+                        "description": "conflict when has already been created today"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "default error"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Views"],
+                "operationId": "update views only for today",
+                "description": "when already although one visitor today was on the site, then this information will simply be updated by the end of the day, not to create a new record, Api independently will check for a unique visit",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "required": false,
+                        "in": "body",
+                        "description": "when the user is an authorized, must indicate it id",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "id": {
+                                    "minimum": 1,
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "response only http status"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "default error"
+                    }
+                }
+            }
+        },
+        "/vies/:date": {
+            "get": {
+                "operationId": "get One View",
+                "description": "get today or last day statistics visits auth users, unique users, and any views",
+                "tags": ["Views"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "get by date",
+                        "pattern": "2022-11-19T13:29:20.113Z",
+                        "in": "path",
+                        "name": "date",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK",
+                                    "description": "default good response message"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": "200",
+                                    "description": "default error status"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/views"
+                                }
+                            }
+                        },
+                        "description": "get statistics visits today or in the last day"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "internal error"
+                    }
+                }
+            }
+        },
+        "/files": {
+            "get": {
+                "operationId": "get all statistics download and read files",
+                "tags": ["Files"],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "required": false,
+                        "name": "date",
+                        "type": "string",
+                        "pattern": "2022-11-19T07:34:12.546Z",
+                        "description": "get all start of date 2022-11-19T07:34:12.546Z"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK",
+                                    "description": "default good response message"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": "200",
+                                    "description": "default error status"
+                                },
+                                "data": {
+                                    "description": "get all files",
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/files"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "get an analyst for all the time"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "default error"
+                    }
+                }
+            },
+            "post": {
+                "operationId": "create files statistics today",
+                "description": "first download file or read today, only one create in one day",
+                "tags": ["Files"],
+                "parameters": [
+                    {
+                        "name": "readNumbers",
+                        "required": false,
+                        "description": "if not have download then create first read today",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "readNumbers": {
+                                    "type": "boolean",
+                                    "pattern": "true"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "downloadNumbers",
+                        "required": false,
+                        "description": "if exists download but not read, then create first download today",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "downloadNumbers": {
+                                    "type": "boolean",
+                                    "pattern": "false"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "readNumber and downloadNumbers",
+                        "required": false,
+                        "description": "it is possible to transfer read and download, but cannot be true of both properties",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "readNumbers": {
+                                    "type": "boolean",
+                                    "pattern": "true"
+                                },
+                                "downloadNumbers": {
+                                    "type": "boolean",
+                                    "example": false
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "CREATED"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": "201"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/files"
+                                }
+                            }
+                        },
+                        "description": "created files today"
+                    },
+                    "409": {
+                        "schema": {
+                            "$ref": "#/definitions/conflictErrorResponse"
+                        },
+                        "description": "conflict when has already been created today"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "default error"
+                    }
+                }
+            },
+            "patch": {
+                "description": "update download and read files numbers today",
+                "operationId": "update Files",
+                "tags": ["Files"],
+                "parameters": [
+                    {
+                        "name": "readNumbers",
+                        "required": false,
+                        "description": "not required but need someone (readNumbers or downloadNumbers)",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "readNumbers": {
+                                    "type": "boolean",
+                                    "pattern": "true"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "downloadNumbers",
+                        "required": false,
+                        "description": "not required but need someone (readNumbers or downloadNumbers)",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "downloadNumbers": {
+                                    "type": "boolean",
+                                    "pattern": "true"
+                                }
+                            }
+                        }
+                    },
+                    {
+                        "name": "readNumber and downloadNumbers",
+                        "required": false,
+                        "description": "it is possible to transfer read and download, but cannot be true of both properties",
+                        "in": "body",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "readNumbers": {
+                                    "type": "boolean",
+                                    "pattern": "true"
+                                },
+                                "downloadNumbers": {
+                                    "type": "boolean",
+                                    "example": false
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "OK"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": "200"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/files"
+                                }
+                            }
+                        },
+                        "description": "created files today"
+                    },
+                    "400": {
+                        "schema": {
+                            "$ref": "#/definitions/badRequestErrorResponse"
+                        },
+                        "description": "when update exists but in req is empty, not someone read or download"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "default error"
+                    }
+                }
+            }
+        },
+        "/files/:date": {
+            "get": {
+                "operationId": "get One Files by Date",
+                "description": "get statistics read, download files today",
+                "tags": ["Files"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "description": "must have date for get one files today",
+                        "type": "string",
+                        "required": true,
+                        "pattern": "2022-11-19T07:34:12.546Z",
+                        "name": "date"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK",
+                                    "description": "default good response message"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": "200",
+                                    "description": "default error status"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/files"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/users": {
+            "get": {
+                "description": "get count all users",
+                "operationId": "get all count",
+                "tags": ["Users"],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 200,
+                                    "description": "http status"
+                                },
+                                "data": {
+                                    "type": "number",
+                                    "example": 40,
+                                    "description": "count users"
+                                }
+                            }
+                        },
+                        "description": "count all users"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/users/:date": {
+            "get": {
+                "description": "get count new users by start of date created",
+                "operationId": "get count all new users",
+                "tags": ["Users"],
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "date",
+                        "type": "string",
+                        "required": true,
+                        "pattern": "2022-11-19T07:34:12.546Z",
+                        "description": "form which date to take the number of new users (date >= createdAt)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 200,
+                                    "description": "http status"
+                                },
+                                "data": {
+                                    "type": "number",
+                                    "example": 40,
+                                    "description": "count users"
+                                }
+                            }
+                        },
+                        "description": "count new users"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/universal error response"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "views": {
+            "type": "object",
+            "properties": {
+                "views": {
+                    "type": "number",
+                    "example": "1",
+                    "description": "count any visit"
+                },
+                "unique_views": {
+                    "type": "number",
+                    "example": "1",
+                    "description": "count unique users visit by ip address"
+                },
+                "auth_views": {
+                    "type": "number",
+                    "example": "1",
+                    "description": "count authorized users which visit"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-11-19T07:34:12.546Z",
+                    "description": "date created last views"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "pattern": "2022-11-19T07:34:12.546Z",
+                    "description": "date updated views"
+                },
+                "_id": {
+                    "type": "string",
+                    "description": "default id type",
+                    "pattern": "637886f4dcf73931f9d0b2c2"
+                },
+                "__v": {
+                    "type": "number",
+                    "description": "version key",
+                    "pattern": "0"
+                }
+            }
+        },
+        "files": {
+            "type": "object",
+            "properties": {
+                "readNumbers": {
+                    "type": "number",
+                    "example": "1",
+                    "description": "count read all books"
+                },
+                "downloadNumbers": {
+                    "type": "number",
+                    "example": "1",
+                    "description": "count download books"
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-11-19T07:34:12.546Z",
+                    "description": "date created last views"
+                },
+                "updatedAt": {
+                    "type": "string",
+                    "pattern": "2022-11-19T07:34:12.546Z",
+                    "description": "date updated views"
+                },
+                "_id": {
+                    "type": "string",
+                    "description": "default id type",
+                    "pattern": "637886f4dcf73931f9d0b2c2"
+                },
+                "__v": {
+                    "type": "number",
+                    "description": "version key",
+                    "pattern": "0"
+                }
+            }
+        },
+        "universal error response": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "pattern": "INTERNAL SERVER ERROR",
+                    "description": "default error response message"
+                },
+                "error": {
+                    "type": "string",
+                    "pattern": "INTERNAL SERVER ERROR",
+                    "description": "default error message"
+                },
+                "status": {
+                    "type": "number",
+                    "example": "500",
+                    "description": "default error status"
+                }
+            }
+        },
+        "conflictErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "pattern": "CONFLICT"
+                },
+                "error": {
+                    "type": "string",
+                    "pattern": "CONFLICT"
+                },
+                "status": {
+                    "type": "number",
+                    "example": "409"
+                }
+            }
+        }
+    }
+}

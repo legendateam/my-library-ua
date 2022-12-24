@@ -1,0 +1,2425 @@
+{
+	"info": {
+		"_postman_id": "ce186bc7-574c-4ad2-876c-8af7e6e1861c",
+		"name": "My-UA-Library",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17155101"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Auth Registration without avatar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const requestBody = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"const responseData = response.data;\r",
+									"\r",
+									"pm.test(\"Status code is 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check repsonse value in status\", () => {\r",
+									"    const status = response.status;\r",
+									"    pm.expect(status).to.eql(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check response value in message\", () => {\r",
+									"    const message = response.message;\r",
+									"    pm.expect(message).to.eql('CREATED');\r",
+									"})\r",
+									"\r",
+									"if(responseData) {\r",
+									"    const userId = response.data.id;\r",
+									"    pm.environment.set('user_id', userId);\r",
+									"\r",
+									"    pm.test(\"Check body response keys\", () => {\r",
+									"        pm.expect(response).to.have.all.keys('status', 'data', 'message')\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check data keys in response\", () => {\r",
+									"        pm.expect(responseData).to.have.all.keys('nickName', 'password', 'email', 'role', 'avatar', 'deletedAt', 'createdAt', 'id')\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check types response body\", () => {\r",
+									"        pm.expect(response).to.be.an('object');\r",
+									"        pm.expect(response.status).to.be.an('number');\r",
+									"        pm.expect(response.message).to.be.an('string');\r",
+									"        pm.expect(responseData).to.be.an('object');\r",
+									"    })\r",
+									"\r",
+									"    pm.test(\"Check types field data in response\", () => {\r",
+									"        for(k in responseData) {\r",
+									"            switch(k) {\r",
+									"                case 'id':\r",
+									"                    pm.expect(responseData[k]).to.be.an('number');\r",
+									"                    break;\r",
+									"                case 'avatar':     \r",
+									"                case 'deletedAt':\r",
+									"                    pm.expect(responseData[k]).to.be.an('null');\r",
+									"                    break;\r",
+									"                default:\r",
+									"                    pm.expect(responseData[k]).to.be.an('string');\r",
+									"            }\r",
+									"        }\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check nickName on eql\", () => {\r",
+									"        const nickName = responseData.nickName;\r",
+									"        pm.expect(nickName).to.eql(requestBody.nickName);\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check email on eql\", () => {\r",
+									"        const email = responseData.email;\r",
+									"        pm.expect(email).to.eql(requestBody.email);\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check response password on not eql with request password\", () => {\r",
+									"        const password = responseData.password;\r",
+									"        pm.expect(password).to.not.eql(requestBody.password);\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"if(!responseData) {\r",
+									"    const status = response.status;\r",
+									"\r",
+									"    pm.test(\"Check body response keys\", () => {\r",
+									"        pm.expect(response).to.have.all.keys('status', 'error', 'message')\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check types response body\", () => {\r",
+									"        pm.expect(response).to.be.an('object');\r",
+									"        pm.expect(response.status).to.be.an('number');\r",
+									"        pm.expect(response.message).to.be.an('string');\r",
+									"        pm.expect(response.error).to.be.an('string');\r",
+									"    })\r",
+									"    \r",
+									"    if(status === 409) {\r",
+									"        pm.test(\"Status code is 409\", () => {\r",
+									"            pm.response.to.have.status(409);\r",
+									"        });\r",
+									"\r",
+									"        pm.test(\"Check response value in message\", () => {\r",
+									"            pm.expect(response.error).to.eql('CONFLICT');\r",
+									"        })\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nickName\": \"{{nickName}}\",\r\n    \"password\": \"{{password}}\",\r\n    \"email\": \"{{email}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/registration",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const responseData = response.data;\r",
+									"const requestBody = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(responseData) {\r",
+									"    pm.environment.set('access_token', responseData.access);\r",
+									"    pm.environment.set('refresh_token', responseData.refresh);\r",
+									"    pm.environment.set('clientKey', responseData.clientKey);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"{{password}}\",\r\n    \"email\": \"{{email}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/login",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Login Success",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/auth/login/success",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"login",
+								"success"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const responseData = response.data;\r",
+									"\r",
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(responseData) {\r",
+									"    pm.environment.set('access_token', responseData.access);\r",
+									"    pm.environment.set('refresh_token', responseData.refresh);\r",
+									"    pm.environment.set('clientKey', responseData.clientKey);\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/refresh",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"refresh"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Logout",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/logout",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Sent Email ForgotPassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json().data.forgot;\r",
+									"\r",
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"{{email}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/forgotPassword",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"forgotPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Change Password",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const responseData = response.data;\r",
+									"\r",
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check message and status\", () => {\r",
+									"    const message = response.message;\r",
+									"    const status = response.status;\r",
+									"\r",
+									"    pm.expect(message).to.be.an('string').that.to.eql('OK');\r",
+									"    pm.expect(status).to.be.an('number').that.to.eql(200);\r",
+									"});\r",
+									"\r",
+									"if(responseData) {\r",
+									"    pm.test(\"Check message and status\", () => {\r",
+									"        pm.expect(responseData).to.be.an('string').that.to.eql('Пароль було усмішно змінено!');\r",
+									"    });\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{forgot_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"{{newPassword}}\",\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/forgotPassword",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"forgotPassword"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Login After Change Passwor",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const responseData = response.data;\r",
+									"const requestBody = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(responseData) {\r",
+									"    pm.environment.set('access_token', responseData.access);\r",
+									"    pm.environment.set('refresh_token', responseData.refresh);\r",
+									"    pm.environment.set('clientKey', responseData.clientKey);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"{{newPassword}}\",\r\n    \"email\": \"{{email}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/login",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Registration with Avatar",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const requestBody = pm.request.body.formdata;\r",
+									"\r",
+									"const responseData = response.data;\r",
+									"\r",
+									"pm.test(\"Status code is 201\", () => {\r",
+									"    pm.response.to.have.status(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check repsonse value in status\", () => {\r",
+									"    const status = response.status;\r",
+									"    pm.expect(status).to.eql(201);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Check response value in message\", () => {\r",
+									"    const message = response.message;\r",
+									"    pm.expect(message).to.eql('CREATED');\r",
+									"})\r",
+									"\r",
+									"if(responseData) {\r",
+									"    const userId = responseData.id;\r",
+									"    const avatar = responseData.avatar;\r",
+									"    pm.environment.set('user_id', userId);\r",
+									"    pm.environment.set('avatar', avatar);\r",
+									"\r",
+									"    pm.test(\"Check body response keys\", () => {\r",
+									"        pm.expect(response).to.have.all.keys('status', 'data', 'message')\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check data keys in response\", () => {\r",
+									"        pm.expect(responseData).to.have.all.keys('nickName', 'password', 'email', 'role', 'avatar', 'deletedAt', 'createdAt', 'id')\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check types response body\", () => {\r",
+									"        pm.expect(response).to.be.an('object');\r",
+									"        pm.expect(response.status).to.be.an('number');\r",
+									"        pm.expect(response.message).to.be.an('string');\r",
+									"        pm.expect(responseData).to.be.an('object');\r",
+									"    })\r",
+									"\r",
+									"    pm.test(\"Check types field data in response\", () => {\r",
+									"        for(k in responseData) {\r",
+									"            switch(k) {\r",
+									"                case 'id':\r",
+									"                    pm.expect(responseData[k]).to.be.an('number');\r",
+									"                    break;\r",
+									"                case 'deletedAt':\r",
+									"                    pm.expect(responseData[k]).to.be.an('null');\r",
+									"                    break;\r",
+									"                default:\r",
+									"                    pm.expect(responseData[k]).to.be.an('string');\r",
+									"            }\r",
+									"        }\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check request and response on eql\", () => {\r",
+									"        const nickName = responseData.nickName;\r",
+									"        const email = responseData.email;\r",
+									"        const password = responseData.password;\r",
+									"        requestBody.map(req => {\r",
+									"            switch(req.key) {\r",
+									"                case 'nickName':\r",
+									"                    pm.expect(nickName).to.eql(req.value);\r",
+									"                    break;\r",
+									"                case 'email':\r",
+									"                    pm.expect(email).to.eql(req.value);\r",
+									"                    break;\r",
+									"                case 'password':\r",
+									"                    pm.expect(password).to.not.eql(req.value);\r",
+									"            }\r",
+									"        })\r",
+									"    });\r",
+									"}\r",
+									"\r",
+									"if(!responseData) {\r",
+									"    const status = response.status;\r",
+									"\r",
+									"    pm.test(\"Check body response keys\", () => {\r",
+									"        pm.expect(response).to.have.all.keys('status', 'error', 'message')\r",
+									"    });\r",
+									"\r",
+									"    pm.test(\"Check types response body\", () => {\r",
+									"        pm.expect(response).to.be.an('object');\r",
+									"        pm.expect(response.status).to.be.an('number');\r",
+									"        pm.expect(response.message).to.be.an('string');\r",
+									"        pm.expect(response.error).to.be.an('string');\r",
+									"    })\r",
+									"    \r",
+									"    if(status === 409) {\r",
+									"        pm.test(\"Status code is 409\", () => {\r",
+									"            pm.response.to.have.status(409);\r",
+									"        });\r",
+									"\r",
+									"        pm.test(\"Check response value in message\", () => {\r",
+									"            pm.expect(response.error).to.eql('CONFLICT');\r",
+									"        })\r",
+									"    }\r",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "nickName",
+									"value": "{{nickName}}",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "{{password}}",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "{{email}}",
+									"type": "text"
+								},
+								{
+									"key": "avatar",
+									"type": "file",
+									"src": "./files/1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/registration",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"registration"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Login Copy",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"const response = pm.response.json();\r",
+									"const responseData = response.data;\r",
+									"const requestBody = JSON.parse(pm.request.body.raw);\r",
+									"\r",
+									"pm.test(\"Status code is 200\", () => {\r",
+									"    pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"if(responseData) {\r",
+									"    pm.environment.set('access_token', responseData.access);\r",
+									"    pm.environment.set('refresh_token', responseData.refresh);\r",
+									"    pm.environment.set('clientKey', responseData.clientKey);\r",
+									"}\r",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"password\": \"{{password}}\",\r\n    \"email\": \"{{email}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/auth/login",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Auth Login Success Copy",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/auth/login/success",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"login",
+								"success"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "New Request",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{refresh_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/auth/refresh/verify/{{clientKey}}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"auth",
+								"refresh",
+								"verify",
+								"{{clientKey}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/users",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"currentPassword\": \"Qwerty12345\",\r\n    \"password\": \"qWertyy431231\",\r\n    \"nickName\": \"Madarauchicha\",\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/users/update",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"users",
+								"update"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Will Read USer",
+			"item": [
+				{
+					"name": "Create Wil lRead for User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 55,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/willRead",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Wil lRead for User",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 55,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/willRead?updateSet=true",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead"
+							],
+							"query": [
+								{
+									"key": "updateSet",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Wil lRead for User",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/willRead",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get will read user",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/willRead/{{clientKey}}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead",
+								"{{clientKey}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Author",
+			"item": [
+				{
+					"name": "Create Author",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"firstName\": \"Юрій\",\r\n    \"lastName\": \"Чебан\",\r\n    \"dateBirthday\": \"1997-09-09\",\r\n    \"country\": \"Україна\",\r\n    \"dateDeath\": \"2075-11-10\",\r\n    \"biography\": \"Іван Котляревський – це та людина, без якої дуже важко уявити українську літературу нового часу. Його внесок в неї настільки вагомий, що його просто неможливо переоцінити. Без Котляревського сьогодні не існувало б української літературної мови, як такої. Твори, які були написані «розмовною» українською мовою, стали тим фундаментом, на якому виросте вся наступна література. Крім літературної діяльності, письменник також був активним громадським, політичним та навіть військовим діячем.   \",\r\n    \"genres\": [12, 7, 8],\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/authors",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Create Author With Photo",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "firstName",
+									"value": "Іван",
+									"type": "text"
+								},
+								{
+									"key": "lastName",
+									"value": "Котляревський",
+									"type": "text"
+								},
+								{
+									"key": "dateBirthday",
+									"value": "1769-09-09",
+									"type": "text"
+								},
+								{
+									"key": "country",
+									"value": "Україна",
+									"type": "text"
+								},
+								{
+									"key": "dateDeath",
+									"value": "1838-11-10",
+									"type": "text"
+								},
+								{
+									"key": "biography",
+									"value": "Іван Котляревський – це та людина, без якої дуже важко уявити українську літературу нового часу. Його внесок в неї настільки вагомий, що його просто неможливо переоцінити. Без Котляревського сьогодні не існувало б української літературної мови, як такої. Твори, які були написані «розмовною» українською мовою, стали тим фундаментом, на якому виросте вся наступна література. Крім літературної діяльності, письменник також був активним громадським, політичним та навіть військовим діячем.",
+									"type": "text"
+								},
+								{
+									"key": "genres",
+									"value": "7",
+									"type": "text"
+								},
+								{
+									"key": "genres",
+									"value": "8",
+									"type": "text"
+								},
+								{
+									"key": "genres",
+									"value": "12",
+									"type": "text"
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "./files/1.jpg"
+								},
+								{
+									"key": "clientKey",
+									"value": "{{clientKey}}",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/authors",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Authors",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/authors",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Authors in Search Input By FirstName or LastName",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/authors/search/yura",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors",
+								"search",
+								"yura"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Authors for Admin",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{localhost}}/authors/admin/{{clientKey}}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors",
+								"admin",
+								"{{clientKey}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get One Author",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/authors/43",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors",
+								"43"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Author One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"country\": \"Україна\",\r\n    \"dateDeath\": \"1838-11-10\",\r\n    \"genres\": [1, 2,  6]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/authors/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Patch Author One With Photo",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "country",
+									"value": "Україна",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "dateDeath",
+									"value": "1838-11-10",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "genres",
+									"value": "1,2,6",
+									"type": "text",
+									"disabled": true
+								},
+								{
+									"key": "photo",
+									"type": "file",
+									"src": "./files/1.jpg"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/authors/16",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors",
+								"16"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove One Author",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/authors/3?clientKey={{clientKey}}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"authors",
+								"3"
+							],
+							"query": [
+								{
+									"key": "clientKey",
+									"value": "{{clientKey}}"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Book",
+			"item": [
+				{
+					"name": "Create Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Джерело\",\r\n    \"description\": \"c\",\r\n    \"authorId\": 2,\r\n    \"yearOfRelease\": 2017,\r\n    \"fileText\": \"c\",\r\n    \"genres\": [1, 2]\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/books",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book Create Form Data",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "{{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Джерело",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "Книга «Джерело» – одна з наймасштабніших та найглибших праць всесвітньо відомого письменника-детективіста Дена Брауна. Це – п’ята частина легендарного циклу «Роберт Ленґдон» – гостросюжетних пригод, в які постійно потрапляє талановитий професор релігійної символіки, його друзі та колеги. На цей раз в центрі сюжету опиняється мільярдер та вчений Едмонд Кірш. Він готовий перевернути науку та розкрити найголовнішу таємницю людства – розповісти про його витоки та майбутнє.\n\nНаукова конференція Кірша в Більбао, на яку він запросив свого вчителя Роберта Ленґдона, перетворюється на суцільне жахіття – видатного науковця вбито, а Ленґдон разом з директоркою музею Амбрею Відаль змушені рятуватися від смертельної небезпеки. Чи знайдуть вони відповіді на ці одвічні питання, що сховані за 47-цифровим паролем в лекції Кірша?\n\nТепер від цих двох людей залежить, чи дізнається світ загадку свого походження. Нескінченні переслідування та лабіринти, головоломки історії та культури, релігійно-моральні дилеми – від такої строкатості сюжету роману «Джерело» голова йде обертом.\n\nПодії сюжетної лінії розгортаються в Іспанії – чудовій країні з багатьма пам’ятками культури та пильною поліцією, яка відслідковує кожен крок головних героїв. Ден Браун не лише показує красу та чарівність цієї країни, а й разом із захоплюючою мандрівкою намагається передбачити майбутнє. Що чекає на нашу цивілізацію – апокаліпсис чи єднання з технікою? Допоможе чи знищить нас природа? В якому співвідношенні знаходяться релігія та наука? Ви отримаєте неординарні відповіді на ці та багато інших питань, якщо вирішите скачати «Джерело» Дена Брауна.\n\nКнига зачіпає багато питань, пов’язаних з найсучаснішими технологіями. Центральну позицію тут посідає штучний інтелект – винахід Кірша, який той не встиг презентувати. Проте стало відомо, що ці наукові відкриття суперечать історії релігії та її цінностям. З кожною сторінкою інтрига поглиблюється та розширюється, і дві таємниці – детективна і наукова – дуже ефектно розкриваються у фінальній частині книги.\n\nРекомендуємо читати онлайн цей пізнавальний твір в нашій електронній бібліотеці безкоштовно та без реєстрації. Відвідувачі сайту можуть отримати роман у форматах fb2, txt, epub та rtf.\n\nНа нашому сайті зібрані найкращі книги в різних жанрах: поеми, романи, вірші видатних авторів, та багато іншого. Щоб заздалегідь зрозуміти, підходить вам твір чи ні, варто ознайомитись з анотацією, а також відгуками тих, хто вже його прочитав, прочитати короткий зміст.\n\nУ нас ви можете читати онлайн або скачати книгу «Джерело» Дена Брауна українською мовою повністю безкоштовно, без реєстрації та смс у різних форматах, як fb2 (фб2), txt (тхт), rtf (ртф), epub (епаб), що підходять для електронних книг, телефонів на ОС Андроїд (android), айфонів, ПК (компьютер), айпадів.\n\nЦікаві цитати та пізнавальні рецензії допоможуть вам дізнатися більше інформації про твір перед тим, як завантажити книгу. Це стосується і стислого переказу. Ми також пропонуємо слухати аудіо книгу / аудіокнигу (mp3) у будь-який час і будь-де.",
+									"type": "text"
+								},
+								{
+									"key": "authorId",
+									"value": "43",
+									"type": "text"
+								},
+								{
+									"key": "fileText",
+									"type": "file",
+									"src": "./files/20803449.rtf"
+								},
+								{
+									"key": "genres",
+									"value": "23",
+									"type": "text"
+								},
+								{
+									"key": "yearOfRelease",
+									"value": "2017",
+									"type": "text"
+								},
+								{
+									"key": "cover",
+									"type": "file",
+									"src": "./files/1.jpg"
+								},
+								{
+									"key": "fileAudio",
+									"type": "file",
+									"src": [],
+									"disabled": true
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/books",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Books",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/books",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Novelty",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/books/novelty/2022-10-19T18:55:30.090Z",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books",
+								"novelty",
+								"2022-10-19T18:55:30.090Z"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Ratings",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/books/ratings/3",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books",
+								"ratings",
+								"3"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Last Added",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/books/last/all",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books",
+								"last",
+								"all"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get One book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/books/21",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Book Update",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "clientKey",
+									"value": "{{clientKey}}",
+									"type": "text"
+								},
+								{
+									"key": "name",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "description",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "fileText",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "yearOfRelease",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "cover",
+									"type": "file",
+									"src": []
+								},
+								{
+									"key": "fileAudio",
+									"type": "file",
+									"src": []
+								}
+							]
+						},
+						"url": {
+							"raw": "{{localhost}}/books/23",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books",
+								"23"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/books/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"books",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Comments",
+			"item": [
+				{
+					"name": "Create Comments",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 21,\r\n    \"text\": \"Чудова книга\",\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/comments",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get All Comments",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/comments",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"comments"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add Likes",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"like\": 1,\r\n    \"disLike\": 0,\r\n    \"commentId\": 25,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/comments/likes",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"comments",
+								"likes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Likes",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/comments/likes/25",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"comments",
+								"likes",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Like",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientKey\": \"{{clientKey}}\",\r\n    \"like\": 0,\r\n    \"disLike\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/comments/likes/25",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"comments",
+								"likes",
+								"25"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get Actions of Comment",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/comments/likes/25",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"comments",
+								"likes",
+								"25"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favorites",
+			"item": [
+				{
+					"name": "Create Favorite",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 21,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/favorites",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"favorites"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get One Favorite By clientKey",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/favorites/{{clientKey}}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"favorites",
+								"{{clientKey}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one Favorite",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/favorites/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"favorites",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one Favorite",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 22,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/favorites/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"favorites",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one RemoveBook Favorite",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 1,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/favorites/1?updateRemove=true",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"favorites",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updateRemove",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genre",
+			"item": [
+				{
+					"name": "Create Genre",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\": \"Драма\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/genres",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"genres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get One Genre",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/genres/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"genres",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Genres",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/genres",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"genres"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remove Genre",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/genres/Детектив",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"genres",
+								"Детектив"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Rating Book",
+			"item": [
+				{
+					"name": "Create Rating For Book",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rate\": 7,\r\n    \"bookId\": 2,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/ratings",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ratings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Rate For Book",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"rate\": 4,\r\n    \"bookId\": 2,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/ratings/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"ratings",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Already Read",
+			"item": [
+				{
+					"name": "Create Already Reads",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 21,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/alreadyread",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"alreadyread"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get One Already Read By UserId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/alreadyread/{{clientKey}}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"alreadyread",
+								"{{clientKey}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one Already Read",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/alreadyread/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"alreadyread",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one AlreadyRead",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 22,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/alreadyread/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"alreadyread",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one RemoveBook AlreadyRead",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 1,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/alreadyread/1?updateRemove=true",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"alreadyread",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updateRemove",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Will Read",
+			"item": [
+				{
+					"name": "Create Will Read",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 21,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/willRead",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get One WillRead By UserId",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/willRead/{{clientKey}}",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead",
+								"{{clientKey}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete one WillRead",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/willRead/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one WillRead",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 22,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/willRead/1",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update one RemoveBook WillRead",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{access_token}}",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 1,\r\n    \"clientKey\": \"{{clientKey}}\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/willRead/1?updateRemove=true",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"willRead",
+								"1"
+							],
+							"query": [
+								{
+									"key": "updateRemove",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Views",
+			"item": [
+				{
+					"name": "get One View For Book",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/views/21",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"views",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add One View",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"bookId\": 1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{localhost}}/views",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"views"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "update View On One",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/view/21",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"view",
+								"21"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove All View For Book",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{localhost}}/views/21",
+							"host": [
+								"{{localhost}}"
+							],
+							"path": [
+								"views",
+								"21"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

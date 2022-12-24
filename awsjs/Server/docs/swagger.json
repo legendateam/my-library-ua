@@ -1,0 +1,4210 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "My-UA-Library",
+        "contact": {
+            "name": "Yura Cheban",
+            "url": "https://github.com/legendateam"
+        },
+        "version": "0.5",
+        "description": "Documentation for My-UA-Library"
+    },
+    "paths": {
+        "/users": {
+            "get": {
+                "tags": ["Users"],
+                "operationId": "get All Users",
+                "description": "get All users",
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "status": {
+                                    "example": 200,
+                                    "type": "number"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/userRelations"
+                                    }
+                                }
+                            }
+                        },
+                        "description": "get All Users"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "error standard"
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "update User",
+                "description": "update user data",
+                "tags": ["Users"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "description": "access token",
+                        "default": "Bearer eyJhbGciOiJIUzI1NisInR5cCI6IkpXVCJ9.eyJpZCI6OTksIm5pY2tOYW1lIjoiY2VyYmVybzRvayIsInJvbGUiOiJVU",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "nickName",
+                        "uniqueItems": true,
+                        "pattern": "Vitto",
+                        "minLength": 4,
+                        "maxLength": 50,
+                        "description": "The first letter is capitalized",
+                        "required": false
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "currentPassword",
+                        "pattern": "Qwerty12345",
+                        "minLength": 7,
+                        "maxLength": 40,
+                        "required": false
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "password",
+                        "pattern": "Ytrewq123443",
+                        "minLength": 7,
+                        "maxLength": 40,
+                        "description": "new password",
+                        "required": false
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "email",
+                        "pattern": "Ytrewq123443",
+                        "minLength": 5,
+                        "maxLength": 35,
+                        "uniqueItems": true,
+                        "required": false
+                    },
+                    {
+                        "type": "file",
+                        "in": "formData",
+                        "name": "avatar",
+                        "pattern": "Ytrewq123443",
+                        "description": "img",
+                        "required": false
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:Чапаєв:597e4a7d-74c7-4043-bf91-6be4c20826a3",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "$ref": "#/definitions/tokenPair"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                }
+                            }
+                        },
+                        "description": "new jwt tokens and unique client Key"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/auth/registration": {
+            "post": {
+                "tags": ["Auth"],
+                "description": "auth",
+                "operationId": "registration user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "nickName",
+                        "uniqueItems": true,
+                        "pattern": "Bohdan",
+                        "required": true,
+                        "minLength": 4,
+                        "maxLength": 50
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "password",
+                        "pattern": "Qwerty12345",
+                        "required": true,
+                        "minLength": 7,
+                        "maxLength": 40
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "email",
+                        "uniqueItems": true,
+                        "required": true,
+                        "minLength": 5,
+                        "maxLength": 35,
+                        "pattern": "sdjffsdf@gmail.com"
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "role",
+                        "required": false,
+                        "minLength": 4,
+                        "maxLength": 5,
+                        "default": "USER"
+                    },
+                    {
+                        "type": "file",
+                        "in": "formData",
+                        "name": "avatar",
+                        "required": false,
+                        "description": "user avatar in profile"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": 201,
+                                    "type": "number"
+                                },
+                                "message": {
+                                    "example": "CREATED",
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/user"
+                                }
+                            }
+                        },
+                        "description": "created new user"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error response"
+                    }
+                }
+            }
+        },
+        "/auth/login": {
+            "post": {
+                "operationId": "login",
+                "description": "user login",
+                "tags": ["Auth"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "email",
+                        "uniqueItems": true,
+                        "required": true,
+                        "minLength": 5,
+                        "maxLength": 35,
+                        "pattern": "sdjffsdf@gmail.com"
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "password",
+                        "pattern": "Qwerty12345",
+                        "required": true,
+                        "minLength": 7,
+                        "maxLength": 40
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/tokenPair"
+                                }
+                            }
+                        },
+                        "description": "auth tokenPair"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/auth/logout": {
+            "post": {
+                "tags": ["Auth"],
+                "operationId": "Logout",
+                "description": "user exit",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "Authorization",
+                        "pattern": "Bearer frewfrvrewef21312e3dsa",
+                        "default": "Bearer fdseerwdef#43rwefds34324were",
+                        "description": "access token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "clientKey",
+                        "required": true,
+                        "pattern": "auth_tokens:Чапаєв:597e4a7d-74c7-4043-bf91-6be4c20826a3"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        },
+                        "description": "return count deleted tokens clientKey"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/auth/refresh": {
+            "post": {
+                "tags": ["Auth"],
+                "operationId": "refresh token pair",
+                "description": "refresh tokenPair",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "Authorization",
+                        "pattern": "Bearer frewfrvrewef21312e3dsa",
+                        "default": "Bearer fdseerwdef#43rwefds34324were",
+                        "description": "refresh token",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "clientKey",
+                        "required": true,
+                        "pattern": "auth_tokens:Чапаєв:597e4a7d-74c7-4043-bf91-6be4c20826a3"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/tokenPair"
+                                }
+                            }
+                        },
+                        "description": "new tokenPair and clientKey"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/forgotPassword": {
+            "post": {
+                "tags": ["Auth"],
+                "description": "forgot password send to email for confirm",
+                "operationId": "forgotPasswordEmail",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "email",
+                        "pattern": "fsdfbgedf@gmail.com",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "Ми відправили вам повідомлення з подальшими інструкціями на ваш електронний адрес,зауважте, що час дії повідомлення становить 30m якщо не знайдете повідомлення, не забудьте перевірити вкладку спам."
+                                }
+                            }
+                        },
+                        "description": "send instruction on email"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "error default"
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "update password",
+                "description": "change password after click on email message",
+                "tags": ["Auth"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "description": "forgot token",
+                        "name": "Authorization",
+                        "pattern": "Bearer rfrd344htr345fd34234fgtyr",
+                        "default": "Bearer rfrd344htr345fd34234fgtyr",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "description": "forgot token",
+                        "name": "password",
+                        "pattern": "QWerty1234432",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "description": "forgot token",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:Madara:d81fcf04-c5f3-4282-8790-ebf773d5103e",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": 200,
+                                    "type": "number"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "default": "Пароль було усмішно змінено!"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "error standard"
+                    }
+                }
+            }
+        },
+        "/refresh/verify/:clientKey": {
+            "get": {
+                "tags": ["Auth"],
+                "operationId": "verify token",
+                "description": "verify refresh token",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "type": "string",
+                        "description": "clientKey in pamaras",
+                        "required": true,
+                        "name": "clientKey"
+                    },
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "description": "refresh token pair",
+                        "pattern": "Bearer rt34irtht34324",
+                        "default": "Bearer regjtoi4o23er4",
+                        "name": "Authorization",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/login/failed": {
+            "get": {
+                "operationId": "login failed",
+                "description": "after failed auth login",
+                "tags": ["Auth"],
+                "parameters": [],
+                "responses": {
+                    "401": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 401
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "UNAUTHORIZED"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "Немає авторизованних данних"
+                                }
+                            }
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/google": {
+            "get": {
+                "operationId": "google auth",
+                "description": "google auth",
+                "tags": ["Auth"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "description": "render google auth"
+                    }
+                }
+            }
+        },
+        "/willRead/:clientKey": {
+            "get": {
+                "tags": ["willRead"],
+                "description": "user list willRead",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "description": "access token",
+                        "pattern": "Bearer rt34irtht34324",
+                        "default": "Bearer regjtoi4o23er4",
+                        "name": "Authorization",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": 200,
+                                    "type": "number"
+                                },
+                                "message": {
+                                    "pattern": "OK",
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/willReadRelations"
+                                }
+                            }
+                        },
+                        "description": "wil read list books in user profile "
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/willRead": {
+            "post": {
+                "tags": ["willRead"],
+                "operationId": "create willRead",
+                "description": "create will read list in user profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "description": "access token",
+                        "pattern": "Bearer rt34irtht34324",
+                        "default": "Bearer regjtoi4o23er4",
+                        "name": "Authorization",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "in": "body",
+                        "pattern": "auth_tokens:Madara:fcf03243-32c7-4a60-9d20-5ac7bbcfd8fe",
+                        "required": true
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "CREATED"
+                                },
+                                "data": {
+                                    "properties": {
+                                        "userId": {
+                                            "type": "number",
+                                            "example": 2
+                                        },
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "pattern": "2022-08-20T08:36:48.449Z"
+                                        },
+                                        "deletedAt": {
+                                            "type": "string",
+                                            "default": null
+                                        },
+                                        "books": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": 3
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "error fedault"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["willRead"],
+                "operationId": "update willRead",
+                "description": "update will read list in user profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "description": "access token",
+                        "pattern": "Bearer rt34irtht34324",
+                        "default": "Bearer regjtoi4o23er4",
+                        "name": "Authorization",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "description": "in order to know that type of update is needed request query updateSet or updateRemove",
+                        "pattern": "updateSet: true",
+                        "name": "updateSet",
+                        "required": false,
+                        "default": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "description": "in order to know that type of update is needed request query updateSet or updateRemove",
+                        "pattern": "updateRemove: true",
+                        "name": "updateRemove",
+                        "required": false,
+                        "default": false
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "in": "body",
+                        "pattern": "auth_tokens:Madara:fcf03243-32c7-4a60-9d20-5ac7bbcfd8fe",
+                        "required": true
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "properties": {
+                                        "userId": {
+                                            "type": "number",
+                                            "example": 2
+                                        },
+                                        "id": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "createdAt": {
+                                            "type": "string",
+                                            "pattern": "2022-08-20T08:36:48.449Z"
+                                        },
+                                        "deletedAt": {
+                                            "type": "string",
+                                            "default": null
+                                        },
+                                        "books": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "id": {
+                                                        "type": "number",
+                                                        "example": 3
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "error fedault"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["willRead"],
+                "operationId": "delete willRead",
+                "description": "delete will read list in user profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "description": "access token",
+                        "pattern": "Bearer rt34irtht34324",
+                        "default": "Bearer regjtoi4o23er4",
+                        "name": "Authorization",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "in": "body",
+                        "pattern": "auth_tokens:Madara:fcf03243-32c7-4a60-9d20-5ac7bbcfd8fe",
+                        "required": true
+                    },
+                    {
+                        "name": "bookId",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 204
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "NO_CONTENT"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "raw": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "affected": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "error fedault"
+                    }
+                }
+            }
+        },
+        "/authors": {
+            "get": {
+                "tags": ["Authors"],
+                "description": "authors router",
+                "operationId": "authors",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "required": false,
+                        "description": "skip authors",
+                        "name": "page",
+                        "pattern": "1",
+                        "default": "1"
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "required": false,
+                        "description": "take authors",
+                        "name": "perPage",
+                        "pattern": "50",
+                        "default": "30"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/definitions/authorRelations"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": "get many authors and count"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Authors"],
+                "operationId": "create Author",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "description": "access token",
+                        "pattern": "Bearer 324324RGT43rf",
+                        "default": "Bearer tgrr4r#$#rf",
+                        "type": "string",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "name": "clientKey",
+                        "type": "string",
+                        "in": "body",
+                        "pattern": "auth_tokens:Madara:fcf03243-32c7-4a60-9d20-5ac7bbcfd8fe",
+                        "required": true
+                    },
+                    {
+                        "name": "firstName",
+                        "type": "string",
+                        "in": "body",
+                        "required": true,
+                        "pattern": "Tomas",
+                        "maxLength": 255
+                    },
+                    {
+                        "name": "lastName",
+                        "type": "string",
+                        "in": "body",
+                        "required": true,
+                        "pattern": "Robinson",
+                        "maxLength": 255
+                    },
+                    {
+                        "name": "biography",
+                        "type": "string",
+                        "in": "body",
+                        "required": true,
+                        "pattern": "Story",
+                        "maxLength": 8000
+                    },
+                    {
+                        "name": "country",
+                        "type": "string",
+                        "in": "body",
+                        "required": true,
+                        "pattern": "UK",
+                        "maxLength": 255
+                    },
+                    {
+                        "name": "dateBirthday",
+                        "type": "string",
+                        "in": "body",
+                        "required": true,
+                        "pattern": "1997-09-09"
+                    },
+                    {
+                        "name": "dateDeath",
+                        "type": "string",
+                        "in": "body",
+                        "required": false,
+                        "pattern": "1997-09-09"
+                    },
+                    {
+                        "name": "pseudonym",
+                        "type": "string",
+                        "in": "body",
+                        "required": false,
+                        "pattern": "Abdula",
+                        "uniqueItems": true
+                    },
+                    {
+                        "name": "genres",
+                        "type": "array",
+                        "in": "body",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "number",
+                                "example": 1
+                            }
+                        },
+                        "required": true,
+                        "description": "two types, if one genres then type number or array of numbers id"
+                    },
+                    {
+                        "name": "photo",
+                        "type": "file",
+                        "in": "formData",
+                        "required": false
+                    }
+                ],
+                "description": "added new Author",
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": 201,
+                                    "type": "number"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "CREATED"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/authorRelations"
+                                }
+                            }
+                        },
+                        "description": "created author successfully"
+                    },
+                    "206": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "example": 206,
+                                    "type": "number"
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "PARTIAL_CONTENT"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/authorRelations"
+                                }
+                            }
+                        },
+                        "description": "if file dont upload"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/authors/:id": {
+            "get": {
+                "operationId": "getOneAuthor",
+                "description": "get One Author",
+                "tags": ["Authors"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "author id",
+                        "pattern": "4",
+                        "in": "path",
+                        "required": true,
+                        "name": "id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/authorRelations"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "sdandart error"
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Authors"],
+                "description": "update auhtor data",
+                "operationId": "updateAuthor",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "author id",
+                        "pattern": "4",
+                        "in": "path",
+                        "required": true,
+                        "name": "id"
+                    },
+                    {
+                        "name": "Authorization",
+                        "description": "access token",
+                        "pattern": "Bearer 324324RGT43rf",
+                        "default": "Bearer tgrr4r#$#rf",
+                        "type": "string",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "name": "clientKey",
+                        "type": "string",
+                        "in": "body",
+                        "pattern": "auth_tokens:Madara:fcf03243-32c7-4a60-9d20-5ac7bbcfd8fe",
+                        "required": true
+                    },
+                    {
+                        "name": "firstName",
+                        "type": "string",
+                        "in": "body",
+                        "required": false,
+                        "pattern": "Tomas",
+                        "maxLength": 255
+                    },
+                    {
+                        "name": "lastName",
+                        "type": "string",
+                        "in": "body",
+                        "required": false,
+                        "pattern": "Robinson",
+                        "maxLength": 255
+                    },
+                    {
+                        "name": "biography",
+                        "type": "string",
+                        "in": "body",
+                        "required": false,
+                        "pattern": "Story",
+                        "maxLength": 8000
+                    },
+                    {
+                        "name": "country",
+                        "type": "string",
+                        "in": "body",
+                        "required": false,
+                        "pattern": "UK",
+                        "maxLength": 255
+                    },
+                    {
+                        "name": "dateDeath",
+                        "type": "string",
+                        "in": "body",
+                        "required": false,
+                        "pattern": "1997-09-09"
+                    },
+                    {
+                        "name": "pseudonym",
+                        "type": "string",
+                        "in": "body",
+                        "required": false,
+                        "pattern": "Abdula",
+                        "uniqueItems": true
+                    },
+                    {
+                        "name": "photo",
+                        "type": "file",
+                        "in": "formData",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/authorRelations"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "sdandart error"
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Authors"],
+                "description": "delete auhtor data",
+                "operationId": "deleteAuthor",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "author id",
+                        "pattern": "4",
+                        "in": "path",
+                        "required": true,
+                        "name": "id"
+                    },
+                    {
+                        "name": "Authorization",
+                        "description": "access token",
+                        "pattern": "Bearer 324324RGT43rf",
+                        "default": "Bearer tgrr4r#$#rf",
+                        "type": "string",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "name": "clientKey",
+                        "type": "string",
+                        "in": "query",
+                        "pattern": "auth_tokens:Madara:fcf03243-32c7-4a60-9d20-5ac7bbcfd8fe",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 204
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "NO_CONTENT"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "NO_CONTENT"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "sdandart error"
+                    }
+                }
+            }
+        },
+        "/authors/search/:fullname": {
+            "get": {
+                "tags": ["Authors"],
+                "description": "authors find by firstname or lastname",
+                "operationId": "authorsSearchByFullName",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "required": true,
+                        "name": "fullname",
+                        "pattern": "John Doe"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "array",
+                                        "items": {
+                                            "$ref": "#/definitions/authorRelations"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": "get many authors and count"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/authors/admin/:clientKey": {
+            "get": {
+                "operationId": "getAllAuthorsAdmin",
+                "description": "get All Authors in admin panel without pagination",
+                "tags": ["Authors"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:Madara:fcf03243-32c7-4a60-9d20-5ac7bbcfd8fe",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "pattern": "Bearer fcf0324332c74a60.9d205ac7bbcfd8fe",
+                        "required": true,
+                        "description": "access token"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/author"
+                                    }
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                }
+                            }
+                        },
+                        "description": "get all without count and pagination, only for admin"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            }
+        },
+        "/books": {
+            "get": {
+                "description": "this route only for developers",
+                "operationId": "get All Books",
+                "tags": ["Books"],
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "$ref": "#/definitions/books"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "default error"
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Books"],
+                "operationId": "books create",
+                "description": "add new book",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "pattern": "Bearer ferwfr32432.er",
+                        "default": "Bearer ferwfr32432.er",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "name",
+                        "required": true,
+                        "in": "body",
+                        "pattern": "Harry Potter",
+                        "description": "book name",
+                        "maxLength": 255,
+                        "minLength": 1
+                    },
+                    {
+                        "type": "number",
+                        "name": "yearOfRelease",
+                        "required": false,
+                        "in": "body",
+                        "description": "date release book, 1300 - max year today"
+                    },
+                    {
+                        "type": "string",
+                        "name": "description",
+                        "required": true,
+                        "in": "body",
+                        "maxLength": 8000,
+                        "minLength": 100
+                    },
+                    {
+                        "type": "file",
+                        "name": "fileText",
+                        "required": false,
+                        "in": "formData",
+                        "description": "book in text format"
+                    },
+                    {
+                        "type": "file",
+                        "name": "cover",
+                        "required": false,
+                        "in": "formData",
+                        "description": "book img"
+                    },
+                    {
+                        "type": "file",
+                        "name": "fileAudio",
+                        "required": false,
+                        "in": "formData",
+                        "description": "book audio file"
+                    },
+                    {
+                        "type": "number",
+                        "name": "authorId",
+                        "description": "not have default value, example id 1",
+                        "required": true,
+                        "in": "body"
+                    },
+                    {
+                        "type": "array",
+                        "name": "genres",
+                        "required": true,
+                        "in": "body",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "number",
+                                "example": 1
+                            }
+                        },
+                        "description": "if one genre then number type else array of numbers"
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "required": true,
+                        "in": "body",
+                        "pattern": "auth_tokens:ads:grroepkfgjoij3248rugjfdkl"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "CREATED"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/books"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/books/:id": {
+            "get": {
+                "tags": ["Books"],
+                "operationId": "get One book",
+                "description": "get One Book",
+                "parameters": [
+                    {
+                        "in": "path",
+                        "name": "id",
+                        "type": "string",
+                        "pattern": "1",
+                        "description": "book id",
+                        "default": 1,
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/books"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": "standard error"
+                    }
+                }
+            },
+            "patch": {
+                "description": "update book",
+                "operationId": "update book",
+                "tags": ["Books"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "required": true,
+                        "name": "id"
+                    },
+                    {
+                        "type": "string",
+                        "description": "access token",
+                        "pattern": "Bearer egter34234.sf423",
+                        "required": true,
+                        "in": "header",
+                        "name": "Authorization"
+                    },
+                    {
+                        "name": "name",
+                        "required": false,
+                        "in": "body",
+                        "type": "string",
+                        "pattern": "Harry Potter",
+                        "minLength": 1,
+                        "maxLength": 255
+                    },
+                    {
+                        "name": "yearOfRelease",
+                        "required": false,
+                        "type": "number",
+                        "description": "1300 - date get now",
+                        "in": "body"
+                    },
+                    {
+                        "name": "description",
+                        "required": false,
+                        "type": "string",
+                        "in": "body",
+                        "pattern": "bla bla bla bla bla"
+                    },
+                    {
+                        "name": "fileText",
+                        "type": "file",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "cover",
+                        "type": "file",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "fileAudio",
+                        "type": "file",
+                        "in": "formData",
+                        "required": false
+                    },
+                    {
+                        "name": "clientKey",
+                        "type": "string",
+                        "in": "body",
+                        "required": true,
+                        "pattern": "auth_tokens:nickname:gdfresdfcf32423ewd"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/books"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "description": "delete book",
+                "operationId": "delete book",
+                "tags": ["Books"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "required": true,
+                        "name": "id"
+                    },
+                    {
+                        "type": "string",
+                        "description": "access token",
+                        "pattern": "Bearer egter34234.sf423",
+                        "required": true,
+                        "in": "header",
+                        "name": "Authorization"
+                    },
+                    {
+                        "name": "clientKey",
+                        "type": "string",
+                        "in": "query",
+                        "required": true,
+                        "pattern": "auth_tokens:nickname:gdfresdfcf32423ewd"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 204
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "NO_CONTENT"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "NO_CONTENT"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/books/search/:search": {
+            "get": {
+                "tags": ["Books"],
+                "operationId": "search books",
+                "description": "search input by like book name and like description",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "search",
+                        "in": "path",
+                        "pattern": "lost girl",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "array",
+                                        "$ref": "#/definitions/books"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/books/ratings/:rate": {
+            "get": {
+                "tags": ["Books"],
+                "operationId": "find books by rate",
+                "description": "get books sort by rating and count",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "rate",
+                        "in": "path",
+                        "pattern": "4.5",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "page",
+                        "in": "query",
+                        "default": 1,
+                        "required": false
+                    },
+                    {
+                        "type": "string",
+                        "name": "perPage",
+                        "in": "query",
+                        "default": 30,
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "array",
+                                        "$ref": "#/definitions/books"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/books/ratings/top/:rate": {
+            "get": {
+                "tags": ["Books"],
+                "operationId": "get all books by rate",
+                "description": "get all books sort by rating and count",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "rate",
+                        "in": "path",
+                        "pattern": "4.5",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "name": "perPage",
+                        "in": "query",
+                        "default": 30,
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "array",
+                                        "$ref": "#/definitions/books"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/books/last/all": {
+            "get": {
+                "operationId": "get last all books",
+                "tags": ["Books"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "perPage",
+                        "in": "query",
+                        "default": 10,
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "$ref": "#/definitions/books"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/novelty/:startDay": {
+            "get": {
+                "tags": ["Books"],
+                "operationId": "get novelty books",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "pattern": "2022-09-11T16:21:04.717Z",
+                        "required": true,
+                        "in": "path",
+                        "description": "date form which the book was added",
+                        "name": "startDay"
+                    },
+                    {
+                        "type": "string",
+                        "default": 1,
+                        "required": false,
+                        "in": "query",
+                        "name": "page"
+                    },
+                    {
+                        "type": "string",
+                        "default": 30,
+                        "required": false,
+                        "in": "query",
+                        "name": "perPage"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "array",
+                                        "$ref": "#/definitions/books"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/books/genres/:genre": {
+            "get": {
+                "tags": ["Books"],
+                "operationId": "get books by genre",
+                "description": "get books by genre",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "name": "genre",
+                        "required": true,
+                        "pattern": "drama"
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "name": "page",
+                        "default": 1,
+                        "required": false
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "default": 30,
+                        "name": "perPage",
+                        "required": false
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "type": "array",
+                                        "$ref": "#/definitions/books"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/comments": {
+            "get": {
+                "tags": ["Comments"],
+                "operationId": "get all comments with pagination",
+                "description": "get all comments with pagination",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "required": false,
+                        "name": "page",
+                        "default": 1
+                    },
+                    {
+                        "type": "string",
+                        "in": "query",
+                        "required": false,
+                        "name": "perPage",
+                        "default": 30
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "$ref": "#/definitions/commentsWithUserRelation"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Comments"],
+                "operationId": "create comment",
+                "description": "writing new comment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "required": true,
+                        "name": "Authorization",
+                        "pattern": "Bearer sdkfjdsklfjksdljf22323.rgfdksc"
+                    },
+                    {
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 33
+                                }
+                            }
+                        },
+                        "name": "bookId"
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "required": true,
+                        "name": "text",
+                        "pattern": "nice"
+                    },
+                    {
+                        "name": "clientKey",
+                        "in": "body",
+                        "required": true,
+                        "type": "string",
+                        "pattern": "auth_tokens:fata:drfsdewr32r"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "CREATED"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/comments"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/comments/likes": {
+            "post": {
+                "tags": ["Comments"],
+                "operationId": "add like comment",
+                "description": "add like for comment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "required": true,
+                        "pattern": "Bearer dfggrfdg32432424"
+                    },
+                    {
+                        "name": "disLike",
+                        "schema": {
+                            "properties": {
+                                "disLike": {
+                                    "type": "number",
+                                    "example": 0
+                                }
+                            }
+                        },
+                        "description": "min 0 , max 1",
+                        "in": "body",
+                        "required": true
+                    },
+                    {
+                        "name": "like",
+                        "description": "min 0 , max 1",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "like": {
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        },
+                        "required": true
+                    },
+                    {
+                        "name": "commentId",
+                        "schema": {
+                            "properties": {
+                                "commentId": {
+                                    "type": "number",
+                                    "example": 3
+                                }
+                            }
+                        },
+                        "in": "body",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "pattern": "auth_tokens:dsfds:edfsdfsf32324",
+                        "in": "body",
+                        "required": true,
+                        "name": "clientKey"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "message": {
+                                    "pattern": "CREATED",
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/comments/likes/:id": {
+            "get": {
+                "tags": ["Comments"],
+                "operationId": "get like comment",
+                "description": "get like for comment",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "name": "id",
+                        "description": "book id",
+                        "required": true,
+                        "default": 1
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "pattern": "OK",
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/actions"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Comments"],
+                "operationId": "update like for comment",
+                "description": "update like, example user replace like on dislike",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "pattern": "1",
+                        "description": "book id",
+                        "in": "path",
+                        "required": true,
+                        "name": "id"
+                    },
+                    {
+                        "name": "Authorization",
+                        "type": "string",
+                        "pattern": "Bearer fddsfbdrrgrg3412",
+                        "description": "book id",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "name": "disLike",
+                        "schema": {
+                            "properties": {
+                                "disLike": {
+                                    "type": "number",
+                                    "example": 0
+                                }
+                            }
+                        },
+                        "description": "min 0 , max 1",
+                        "in": "body",
+                        "required": false
+                    },
+                    {
+                        "name": "like",
+                        "description": "min 0 , max 1",
+                        "in": "body",
+                        "schema": {
+                            "properties": {
+                                "like": {
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        },
+                        "required": false
+                    },
+                    {
+                        "type": "string",
+                        "pattern": "auth_tokens:dsfds:edfsdfsf32324",
+                        "in": "body",
+                        "required": true,
+                        "name": "clientKey"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Comments"],
+                "operationId": "delete like for comment",
+                "description": "delete like, example user replace like on dislike",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "pattern": "1",
+                        "description": "book id",
+                        "in": "path",
+                        "required": true,
+                        "name": "id"
+                    },
+                    {
+                        "name": "Authorization",
+                        "type": "string",
+                        "pattern": "Bearer fddsfbdrrgrg3412",
+                        "description": "book id",
+                        "in": "header",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "pattern": "auth_tokens:dsfds:edfsdfsf32324",
+                        "in": "body",
+                        "required": true,
+                        "name": "clientKey"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 204
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "NO_CONTENT"
+                                },
+                                "data": {
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/favorites": {
+            "post": {
+                "tags": ["Favorites"],
+                "operationId": "create favorites",
+                "description": "create favorites books list for user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "Authorization",
+                        "pattern": "Bearer dsfgwefgrekfmwkewfeklmf232",
+                        "description": "access token",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "name": "bookId",
+                        "schema": {
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 3
+                                }
+                            }
+                        },
+                        "description": "access token",
+                        "required": true,
+                        "in": "body"
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:xxx:332213ewdsf",
+                        "required": true,
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "CREATED",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/favorites"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Favorites"],
+                "operationId": "update favorites",
+                "description": "update favorites books list in user profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "Authorization",
+                        "pattern": "Bearer dsfgwefgrekfmwkewfeklmf232",
+                        "description": "access token",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updateSet",
+                        "pattern": "true",
+                        "description": "add book in user favorite list",
+                        "required": false,
+                        "default": true,
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updateRemove",
+                        "pattern": "false",
+                        "description": "remove book in user favorite list",
+                        "required": false,
+                        "default": false,
+                        "in": "query"
+                    },
+                    {
+                        "name": "bookId",
+                        "schema": {
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 3
+                                }
+                            }
+                        },
+                        "description": "access token",
+                        "required": true,
+                        "in": "body"
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:xxx:332213ewdsf",
+                        "required": true,
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "OK",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/favorites"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Favorites"],
+                "operationId": "remove favorites",
+                "description": "remove favorites books list in user profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "Authorization",
+                        "pattern": "Bearer dsfgwefgrekfmwkewfeklmf232",
+                        "description": "access token",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:xxx:332213ewdsf",
+                        "required": true,
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "NO_CONTENT",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 204
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "raw": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "affected": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/favorites/:clientKey": {
+            "get": {
+                "operationId": "get one user favorites",
+                "tags": ["Favorites"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "pattern": "auth_tokens:okten:342wefd",
+                        "in": "path",
+                        "required": true,
+                        "name": "clientKey"
+                    },
+                    {
+                        "required": true,
+                        "in": "header",
+                        "pattern": "Bearer sdfverwfdvd32123",
+                        "type": "string",
+                        "name": "Authorization"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/favoritesRelations"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/genres": {
+            "get": {
+                "tags": ["Genres"],
+                "operationId": "genres all",
+                "parameters": [],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/definitions/genres"
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "post": {
+                "tags": ["Genres"],
+                "operationId": "create genre",
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "pattern": "Bearer dfsdfsdfser213123.efdf",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "body",
+                        "pattern": "drama",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "clientKey",
+                        "in": "body",
+                        "pattern": "auth_tokens:fdsfdsf2312:213213",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "CREATED"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/genres"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/genres/:id": {
+            "get": {
+                "operationId": "get one genre",
+                "tags": ["Genres"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "name": "id",
+                        "pattern": "2",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/genres"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/genres/:name": {
+            "delete": {
+                "operationId": "remove genre",
+                "tags": ["Genres"],
+                "parameters": [
+                    {
+                        "name": "Authorization",
+                        "in": "header",
+                        "pattern": "Bearer dfsdfsdfser213123.efdf",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "name",
+                        "in": "path",
+                        "pattern": "drama",
+                        "required": true,
+                        "type": "string"
+                    },
+                    {
+                        "name": "clientKey",
+                        "in": "body",
+                        "pattern": "auth_tokens:fdsfdsf2312:213213",
+                        "required": true,
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "NO_CONTENT"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "raw": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "affected": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/ratings": {
+            "post": {
+                "tags": ["Ratings"],
+                "operationId": "create Genre",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "required": true,
+                        "pattern": "Bearer edsfdfesdf31232"
+                    },
+                    {
+                        "type": "number",
+                        "in": "body",
+                        "name": "rate",
+                        "required": true,
+                        "description": "rate 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5"
+                    },
+                    {
+                        "type": "number",
+                        "in": "body",
+                        "name": "bookId",
+                        "required": true,
+                        "description": "rate 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5"
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "clientKey",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/ratings"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/ratings/:id": {
+            "patch": {
+                "tags": ["Ratings"],
+                "operationId": "update Genre",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "name": "id",
+                        "description": "rating id",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "required": true,
+                        "pattern": "Bearer edsfdfesdf31232"
+                    },
+                    {
+                        "type": "number",
+                        "in": "body",
+                        "name": "rate",
+                        "required": true,
+                        "description": "rate 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5"
+                    },
+                    {
+                        "type": "number",
+                        "in": "body",
+                        "name": "bookId",
+                        "required": true,
+                        "description": "rate 1, 1.5, 2, 2.5, 3, 3.5, 4, 4.5, 5"
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "clientKey",
+                        "required": true,
+                        "pattern": "auth_tokens:hjhjh:jhjhjhj"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "raw": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "affected": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "generatedMaps": {
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Ratings"],
+                "operationId": "delete Genre",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "in": "path",
+                        "name": "id",
+                        "description": "rating id",
+                        "required": true
+                    },
+                    {
+                        "type": "string",
+                        "in": "header",
+                        "name": "Authorization",
+                        "required": true,
+                        "pattern": "Bearer edsfdfesdf31232"
+                    },
+                    {
+                        "type": "string",
+                        "in": "body",
+                        "name": "clientKey",
+                        "required": true,
+                        "pattern": "auth_tokens:hjhjh:jhjhjhj"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 204
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "NO_CONTENT"
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "raw": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "affected": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "generatedMaps": {
+                                            "type": "array"
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/alreadyread": {
+            "post": {
+                "tags": ["Alreadyread"],
+                "operationId": "create alreadyread",
+                "description": "create alreadyread books list for user",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "Authorization",
+                        "pattern": "Bearer dsfgwefgrekfmwkewfeklmf232",
+                        "description": "access token",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "name": "bookId",
+                        "schema": {
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 3
+                                }
+                            }
+                        },
+                        "description": "access token",
+                        "required": true,
+                        "in": "body"
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:xxx:332213ewdsf",
+                        "required": true,
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "CREATED",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/alreadyRead"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "tags": ["Alreadyread"],
+                "operationId": "update alreadyread",
+                "description": "update alreadyread books list in user profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "Authorization",
+                        "pattern": "Bearer dsfgwefgrekfmwkewfeklmf232",
+                        "description": "access token",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updateSet",
+                        "pattern": "true",
+                        "description": "add book in user favorite list",
+                        "required": false,
+                        "default": true,
+                        "in": "query"
+                    },
+                    {
+                        "type": "string",
+                        "name": "updateRemove",
+                        "pattern": "false",
+                        "description": "remove book in user favorite list",
+                        "required": false,
+                        "default": false,
+                        "in": "query"
+                    },
+                    {
+                        "name": "bookId",
+                        "schema": {
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 3
+                                }
+                            }
+                        },
+                        "description": "access token",
+                        "required": true,
+                        "in": "body"
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:xxx:332213ewdsf",
+                        "required": true,
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "OK",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/alreadyRead"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "tags": ["Alreadyread"],
+                "operationId": "remove alreadyread",
+                "description": "remove alreadyread books list in user profile",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "Authorization",
+                        "pattern": "Bearer dsfgwefgrekfmwkewfeklmf232",
+                        "description": "access token",
+                        "required": true,
+                        "in": "header"
+                    },
+                    {
+                        "type": "string",
+                        "name": "clientKey",
+                        "pattern": "auth_tokens:xxx:332213ewdsf",
+                        "required": true,
+                        "in": "body"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "NO_CONTENT",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 204
+                                },
+                                "data": {
+                                    "type": "object",
+                                    "properties": {
+                                        "raw": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "affected": {
+                                            "type": "number",
+                                            "example": 1
+                                        }
+                                    }
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/alreadyread/:clientKey": {
+            "get": {
+                "operationId": "get one user favorites",
+                "tags": ["Alreadyread"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "pattern": "auth_tokens:okten:342wefd",
+                        "in": "path",
+                        "required": true,
+                        "name": "clientKey"
+                    },
+                    {
+                        "required": true,
+                        "in": "header",
+                        "pattern": "Bearer sdfverwfdvd32123",
+                        "type": "string",
+                        "name": "Authorization"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/alreadyReadRelations"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/views": {
+            "post": {
+                "operationId": "create views for books",
+                "tags": ["Views"],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "required": true,
+                        "name": "bookId",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "bookId": {
+                                    "type": "number",
+                                    "example": 100
+                                }
+                            }
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "schema": {
+                            "properties": {
+                                "message": {
+                                    "pattern": "CREATED",
+                                    "type": "string"
+                                },
+                                "status": {
+                                    "type": "number",
+                                    "example": 201
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                }
+                            }
+                        },
+                        "description": ""
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        },
+        "/views/:bookId": {
+            "get": {
+                "operationId": "get views for book by bookid",
+                "tags": ["Views"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "bookId",
+                        "in": "path",
+                        "required": true,
+                        "pattern": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "{\"views\":488}"
+                                }
+                            }
+                        },
+                        "description": "get count views users"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "patch": {
+                "operationId": "addition view for book by bookid",
+                "tags": ["Views"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "bookId",
+                        "in": "path",
+                        "required": true,
+                        "pattern": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                }
+                            }
+                        },
+                        "description": "get count views users"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            },
+            "delete": {
+                "operationId": "delete views for book by bookid",
+                "tags": ["Views"],
+                "parameters": [
+                    {
+                        "type": "string",
+                        "name": "bookId",
+                        "in": "path",
+                        "required": true,
+                        "pattern": "1"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "schema": {
+                            "properties": {
+                                "status": {
+                                    "type": "number",
+                                    "example": 200
+                                },
+                                "message": {
+                                    "type": "string",
+                                    "pattern": "OK"
+                                },
+                                "data": {
+                                    "type": "number",
+                                    "example": 1
+                                }
+                            }
+                        },
+                        "description": "get count views users"
+                    },
+                    "500": {
+                        "schema": {
+                            "$ref": "#/definitions/defaultErrorResponse"
+                        },
+                        "description": ""
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "user": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "nickName": {
+                    "type": "string",
+                    "pattern": "Madara",
+                    "maxLength": 50,
+                    "minLength": 4,
+                    "uniqueItems": true
+                },
+                "password": {
+                    "type": "string",
+                    "pattern": "Qwerty12345",
+                    "maxLength": 40,
+                    "minLength": 7,
+                    "description": "password must have min one number and one uppercase char"
+                },
+                "email": {
+                    "type": "string",
+                    "pattern": "email@gmail.com",
+                    "minLength": 5,
+                    "maxLength": 35,
+                    "description": "email address",
+                    "uniqueItems": true
+                },
+                "role": {
+                    "type": "string",
+                    "pattern": "USER or ADMIN",
+                    "description": "role must be user or admin, user default value",
+                    "default": "USER"
+                },
+                "avatar": {
+                    "type": "string",
+                    "pattern": "/avatar/users/dfd2.jpg",
+                    "description": "path to image without domain",
+                    "default": null
+                }
+            }
+        },
+        "userRelations": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "nickName": {
+                    "type": "string",
+                    "pattern": "Madara",
+                    "maxLength": 50,
+                    "minLength": 4,
+                    "uniqueItems": true
+                },
+                "password": {
+                    "type": "string",
+                    "pattern": "Qwerty12345",
+                    "maxLength": 40,
+                    "minLength": 7,
+                    "description": "password must have min one number and one uppercase char"
+                },
+                "email": {
+                    "type": "string",
+                    "pattern": "email@gmail.com",
+                    "minLength": 5,
+                    "maxLength": 35,
+                    "description": "email address",
+                    "uniqueItems": true
+                },
+                "role": {
+                    "type": "string",
+                    "pattern": "USER or ADMIN",
+                    "description": "role must be user or admin, user default value",
+                    "default": "USER"
+                },
+                "avatar": {
+                    "type": "string",
+                    "pattern": "/avatar/users/dfd2.jpg",
+                    "description": "path to image without domain",
+                    "default": null
+                },
+                "alreadyRead": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/alreadyRead"
+                    }
+                },
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/comments"
+                    }
+                },
+                "ratings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ratings"
+                    }
+                },
+                "favorites": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/favorites"
+                    }
+                },
+                "willRead": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/willRead"
+                    }
+                }
+            }
+        },
+        "alreadyRead": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "description": "user id for relations with user",
+                    "example": 1
+                },
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                }
+            }
+        },
+        "alreadyReadRelations": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "description": "user id for relations with user",
+                    "example": 1
+                },
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "books": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/books"
+                    }
+                }
+            }
+        },
+        "favorites": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "example": 1
+                },
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                }
+            }
+        },
+        "favoritesRelations": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "example": 1
+                },
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "books": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/books"
+                    }
+                }
+            }
+        },
+        "willRead": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "example": 1
+                },
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                }
+            }
+        },
+        "willReadRelations": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "example": 1
+                },
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "books": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/books"
+                    }
+                }
+            }
+        },
+        "books": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "name": {
+                    "type": "string",
+                    "maxLength": 250,
+                    "minLength": 1,
+                    "pattern": "Name of the Wind",
+                    "description": "book name"
+                },
+                "yearOfRelease": {
+                    "type": "number",
+                    "description": "year release but max today, may be null",
+                    "minLength": 1300,
+                    "default": null
+                },
+                "description": {
+                    "type": "string",
+                    "description": "little book description",
+                    "minLength": 100,
+                    "maxLength": 8000,
+                    "uniqueItems": true
+                },
+                "fileText": {
+                    "uniqueItems": true,
+                    "maxLength": 255,
+                    "type": "string",
+                    "description": "path to file text without domain name",
+                    "pattern": "/books/4/filetext.pdf",
+                    "default": null
+                },
+                "cover": {
+                    "uniqueItems": true,
+                    "maxLength": 255,
+                    "type": "string",
+                    "description": "path to image without domain name",
+                    "pattern": "/books/4/name.jpg",
+                    "default": null
+                },
+                "fileAudio": {
+                    "uniqueItems": true,
+                    "maxLength": 255,
+                    "type": "string",
+                    "description": "path to file audio without domain name",
+                    "pattern": "/books/4/fileaudio.mp3",
+                    "default": null
+                },
+                "authorId": {
+                    "type": "number",
+                    "example": 4,
+                    "description": "author id for relations"
+                },
+                "author": {
+                    "$ref": "#/definitions/author"
+                },
+                "comments": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/comments"
+                    }
+                },
+                "genres": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/genres"
+                    }
+                },
+                "ratings": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ratings"
+                    }
+                }
+            }
+        },
+        "comments": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "example": 1,
+                    "description": "user id for relations"
+                },
+                "bookId": {
+                    "type": "number",
+                    "description": "book id for relations",
+                    "example": 1
+                },
+                "text": {
+                    "type": "string",
+                    "pattern": "good book"
+                },
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                }
+            }
+        },
+        "commentsWithUserRelation": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "example": 1,
+                    "description": "user id for relations"
+                },
+                "bookId": {
+                    "type": "number",
+                    "description": "book id for relations",
+                    "example": 1
+                },
+                "text": {
+                    "type": "string",
+                    "pattern": "good book"
+                },
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "user": {
+                    "$ref": "#/definitions/user"
+                }
+            }
+        },
+        "ratings": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "rate": {
+                    "type": "number",
+                    "example": 4.4
+                },
+                "userId": {
+                    "type": "number",
+                    "example": 1
+                },
+                "bookId": {
+                    "type": "number",
+                    "example": 1
+                }
+            }
+        },
+        "author": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "firstName": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "pattern": "Freddy"
+                },
+                "lastName": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "pattern": "Jenkins"
+                },
+                "dateDeath": {
+                    "type": "string",
+                    "pattern": "2022-11-19T07:34:12.546Z",
+                    "description": "date death author",
+                    "default": null
+                },
+                "country": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "pattern": "USA"
+                },
+                "pseudonym": {
+                    "type": "string",
+                    "uniqueItems": true,
+                    "default": null
+                },
+                "dateBirthday": {
+                    "type": "string",
+                    "pattern": "2022-11-19T07:34:12.546Z",
+                    "description": "dateBirthday"
+                },
+                "biography": {
+                    "type": "string",
+                    "description": "author biography",
+                    "pattern": "Adam Silvera is the New York Times bestselling author of They Both Die at the End, More Happy Than Not, and History Is All You Left Me and—together with Becky Albertalli—coauthor of What If It’s Us.",
+                    "maxLength": 8000
+                },
+                "photo": {
+                    "type": "string",
+                    "default": null,
+                    "uniqueItems": true,
+                    "description": "path to photo",
+                    "pattern": "author/34/photos/sfsdf.jpg"
+                }
+            }
+        },
+        "authorRelations": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "firstName": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "pattern": "Freddy"
+                },
+                "lastName": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "pattern": "Jenkins"
+                },
+                "dateDeath": {
+                    "type": "string",
+                    "pattern": "2022-11-19T07:34:12.546Z",
+                    "description": "date death author",
+                    "default": null
+                },
+                "country": {
+                    "type": "string",
+                    "maxLength": 255,
+                    "pattern": "USA"
+                },
+                "pseudonym": {
+                    "type": "string",
+                    "uniqueItems": true,
+                    "default": null
+                },
+                "dateBirthday": {
+                    "type": "string",
+                    "pattern": "2022-11-19T07:34:12.546Z",
+                    "description": "dateBirthday"
+                },
+                "biography": {
+                    "type": "string",
+                    "description": "author biography",
+                    "pattern": "Adam Silvera is the New York Times bestselling author of They Both Die at the End, More Happy Than Not, and History Is All You Left Me and—together with Becky Albertalli—coauthor of What If It’s Us.",
+                    "maxLength": 8000
+                },
+                "photo": {
+                    "type": "string",
+                    "default": null,
+                    "uniqueItems": true,
+                    "description": "path to photo",
+                    "pattern": "author/34/photos/sfsdf.jpg"
+                },
+                "books": {
+                    "$ref": "#/definitions/books"
+                },
+                "genres": {
+                    "$ref": "#/definitins/genres"
+                }
+            }
+        },
+        "genres": {
+            "type": "object",
+            "properties": {
+                "id": {
+                    "type": "number",
+                    "example": 1
+                },
+                "createdAt": {
+                    "type": "string",
+                    "pattern": "2022-08-20T08:36:48.449Z"
+                },
+                "deletedAt": {
+                    "type": "string",
+                    "default": null
+                },
+                "name": {
+                    "type": "string",
+                    "uniqueItems": true,
+                    "pattern": "drama",
+                    "maxLength": 50
+                }
+            }
+        },
+        "tokenPair": {
+            "type": "object",
+            "properties": {
+                "access": {
+                    "type": "string",
+                    "description": "access token",
+                    "pattern": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQyLCJuaWNrTmFtZSI6ItCn0LDQv9Cw0ZTQsiIsInJvbGUiOiJBRE1JTiIsImF2YXRhciI6bnVsbCwiZW1haWwiOiJ1bmRlcnRha2VyMTc2QGdtYWlsLmNvbSIsImlhdCI6MTY2ODI5MzY3NSwiZXhwIjoxNjY4Mjk1NDc1fQ.-NejWJFAqDoy2a809loVHIpHmKWqemjsQo7gOdoYqyQ"
+                },
+                "refresh": {
+                    "type": "string",
+                    "description": "refresh token",
+                    "pattern": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTQyLCJuaWNrTmFtZSI6ItCn0LDQv9Cw0ZTQsiIsInJvbGUiOiJBRE1JTiIsImF2YXRhciI6bnVsbCwiZW1haWwiOiJ1bmRlcnRha2VyMTc2QGdtYWlsLmNvbSIsImlhdCI6MTY2ODI5MzY3NSwiZXhwIjoxNjY4Mjk1NDc1fQ.-NejWJFAqDoy2a809loVHIpHmKWqemjsQo7gOdoYqyQ"
+                },
+                "clientKey": {
+                    "type": "string",
+                    "description": "tokenType_nickNameUser_randomUniqueId",
+                    "pattern": "auth_tokens:Чапаєв:597e4a7d-74c7-4043-bf91-6be4c20826a3"
+                }
+            }
+        },
+        "actions": {
+            "type": "object",
+            "properties": {
+                "userId": {
+                    "type": "number",
+                    "example": 32
+                },
+                "like": {
+                    "type": "number",
+                    "example": 1
+                },
+                "disLike": {
+                    "type": "number",
+                    "example": 0
+                }
+            }
+        },
+        "defaultErrorResponse": {
+            "type": "object",
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "pattern": "INTERNAL SERVER ERROR",
+                    "description": "default error response message"
+                },
+                "error": {
+                    "type": "string",
+                    "pattern": "INTERNAL SERVER ERROR",
+                    "description": "default error message"
+                },
+                "status": {
+                    "type": "number",
+                    "example": "500",
+                    "description": "default error status"
+                }
+            }
+        }
+    }
+}

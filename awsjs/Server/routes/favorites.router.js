@@ -1,0 +1,12 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.favoritesRouter = void 0;
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const middlewares_1 = require("../middlewares");
+exports.favoritesRouter = (0, express_1.Router)();
+exports.favoritesRouter.get('/:clientKey', middlewares_1.authMiddleware.isAuthorization, middlewares_1.favoritesMiddleware.checkParamsOnClientKey, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.checkUserAuthByPayload, controllers_1.favoritesController.getOneByUserId);
+exports.favoritesRouter.post('/', middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.favoritesMiddleware.validateBody, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.favoritesMiddleware.checkBooksById, middlewares_1.favoritesMiddleware.checkUniqueByUserId, controllers_1.favoritesController.createOne);
+exports.favoritesRouter.patch('/', middlewares_1.favoritesMiddleware.checkQuery, middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.favoritesMiddleware.validateBody, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.favoritesMiddleware.checkBooksById, middlewares_1.favoritesMiddleware.checkExistsByUserId, controllers_1.favoritesController.updateOne);
+exports.favoritesRouter.delete('/', middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.isClientKey, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.favoritesMiddleware.checkExistsByUserId, controllers_1.favoritesController.deleteOne);
+//# sourceMappingURL=favorites.router.js.map

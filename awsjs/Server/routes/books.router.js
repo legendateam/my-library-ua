@@ -1,0 +1,21 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.booksRouter = void 0;
+const express_1 = require("express");
+const controllers_1 = require("../controllers");
+const middlewares_1 = require("../middlewares");
+const constants_1 = require("../constants");
+exports.booksRouter = (0, express_1.Router)();
+const filesUpload = (0, middlewares_1.bookTextAudioCoverFields)();
+exports.booksRouter.get('/', controllers_1.booksController.getAll);
+exports.booksRouter.get('/:id', middlewares_1.bookMiddleware.checkParamsId, controllers_1.booksController.getOneById);
+exports.booksRouter.get('/search/:search', middlewares_1.bookMiddleware.checkSearchData, controllers_1.booksController.getAllBySearchData);
+exports.booksRouter.post('/', filesUpload.fields(constants_1.filesUploadFields), middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.bookMiddleware.validateBody, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.authMiddleware.isAdmin, middlewares_1.bookMiddleware.isBooksExistsByDescription, controllers_1.booksController.createOne);
+exports.booksRouter.patch('/:id', filesUpload.fields(constants_1.filesUploadFields), middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.bookMiddleware.validateUpdateBody, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.authMiddleware.isAdmin, middlewares_1.bookMiddleware.checkBookExistsForUpdateById, controllers_1.booksController.updateOne);
+exports.booksRouter.get('/ratings/:rate', middlewares_1.paginationMiddleware.checkQuery, controllers_1.booksController.getAllRatings);
+exports.booksRouter.get('/ratings/top/:rate', controllers_1.booksController.getTopRatings);
+exports.booksRouter.get('/last/all', middlewares_1.paginationMiddleware.checkQuery, controllers_1.booksController.lastAddedBooks);
+exports.booksRouter.get('/novelty/:startDay', middlewares_1.paginationMiddleware.checkQuery, controllers_1.booksController.getAllNovelty);
+exports.booksRouter.get('/genres/:genre', middlewares_1.paginationMiddleware.checkQuery, controllers_1.booksController.getAllByGenre);
+exports.booksRouter.delete('/:id', middlewares_1.bookMiddleware.checkParamsId, middlewares_1.authMiddleware.isAuthorization, middlewares_1.authMiddleware.checkAuthorizationOnBearer, middlewares_1.authMiddleware.validateAuthorizationToken, middlewares_1.bookMiddleware.checkQueryClientKey, middlewares_1.authMiddleware.verifyAccessToken, middlewares_1.authMiddleware.wasItIssuedToken, middlewares_1.authMiddleware.checkUserAuthByPayload, middlewares_1.authMiddleware.isAdmin, middlewares_1.bookMiddleware.checkBookExistsById, controllers_1.booksController.deleteOne);
+//# sourceMappingURL=books.router.js.map
