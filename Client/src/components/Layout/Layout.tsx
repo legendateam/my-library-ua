@@ -66,27 +66,18 @@ export const Layout = () => {
                             refreshToken: tokenPairStorage.refresh,
                             clientKey: tokenPairStorage.clientKey,
                         });
-
                         if (checkRefreshOnJwtExpired.status === HttpStatusEnum.OK) {
                             dispatch(addTokenPair({ tokenPair: tokenPairStorage }));
                         }
                     }
                 } catch (e) {
-                    const axiosError = (e as AxiosError)?.response?.data;
-                    const responseErrorData = axiosError as IResponseError;
-
-                    if (responseErrorData?.error === HttpMessageEnum.UNAUTHORIZED) {
-                        dispatch(refreshTokenPairThunk({
-                            refreshToken: tokenPairStorage.refresh, clientKey: tokenPairStorage.clientKey,
-                        }));
-                    }
+                    localStorage.removeItem(localStorageConstant.auth);
                 }
             })();
 
             if (isAuthGoogle) {
                 (async () => {
                     try {
-
                         const data = await authService.loginSuccess();
 
                         const checkRefreshOnJwtExpired = await authService.checkRefreshOnJwtExpired({
@@ -99,16 +90,7 @@ export const Layout = () => {
                             localStorage.removeItem(localStorageConstant.googleAuth);
                         }
                     } catch (e) {
-                        const axiosError = (e as AxiosError)?.response?.data;
-                        const responseErrorData = axiosError as IResponseError;
-
                         localStorage.removeItem(localStorageConstant.googleAuth);
-
-                        if (responseErrorData?.error === HttpMessageEnum.UNAUTHORIZED) {
-                            dispatch(refreshTokenPairThunk({
-                                refreshToken: tokenPairStorage.refresh, clientKey: tokenPairStorage.clientKey,
-                            }));
-                        }
                     }
                 })();
             }
