@@ -13,7 +13,6 @@ export * from './localStorage.constant';
 export * from './paginationType.constant';
 export * from './profileListButton.constant';
 export * from './query.constant';
-export * from './regex.constant';
 export * from './routePath.constant';
 export * from './search.constant';
 export * from './sort.constant';
