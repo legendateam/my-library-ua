@@ -7,7 +7,10 @@ export const authRegistrationFormValidator = Joi.object({
         .regex(/^[A-ZА-ЯЄІЇҐ][a-zа-яєіїґ0-9]*(([,.] |[ '-])[A-Za-zА-ЯІЄЇҐа-яієїґ0-9][a-zа-яієїґ0-9]*)*(\.?)( [IVXLCDM]+)?$/)
         .trim()
         .required()
-        .messages(validationMessageErrorConstant),
+        .messages({
+            ...validationMessageErrorConstant,
+            'string.pattern.base': 'Псевдонім повинен починатись з великої літери, від 4 до 50 букв або цифр, без спеціальних символів',
+        }),
     email: Joi.string()
         .min(5)
         .max(35)
