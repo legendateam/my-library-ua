@@ -1,4 +1,5 @@
 import { NextFunction, Response } from 'express';
+
 import { ErrorHandler } from '../error';
 import { HttpMessageEnum, HttpStatusEnum } from '../enums';
 import { IRequest, IUserUpdate } from '../interfaces';
