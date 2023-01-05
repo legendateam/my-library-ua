@@ -62,6 +62,7 @@ const RegistrationForm: FC<IHandleRegistrationForm> = ({ handleRegistration }: I
 
                 if (message) {
                     setSuccessfullyMessage(generalMessageConstant.successfullyRegistration);
+                    setTimeout(() => handleRegistration(), 500);
                 }
             } catch (e) {
                 const error = e as AxiosError;
@@ -92,6 +93,7 @@ const RegistrationForm: FC<IHandleRegistrationForm> = ({ handleRegistration }: I
 
             if (message) {
                 setSuccessfullyMessage(generalMessageConstant.successfullyRegistration);
+                setTimeout(() => handleRegistration(), 500);
             }
         } catch (e) {
             const error = e as AxiosError;
@@ -138,6 +140,9 @@ const RegistrationForm: FC<IHandleRegistrationForm> = ({ handleRegistration }: I
         handleBlurToggle();
         handleRegistration();
     };
+
+    const close = (): void => handleRegistration();
+
     return (
         <div className={css.header__auth_registration}>
             <form className={css.header__auth_form_registration} onSubmit={handleSubmit(submit)}>
