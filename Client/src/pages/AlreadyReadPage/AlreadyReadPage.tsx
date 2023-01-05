@@ -5,7 +5,7 @@ import css from './AlreadyReadPage.module.css';
 import { useAppDispatch, useAppSelector, useEffectOnce } from '../../hooks';
 import { Book, Title } from '../../components';
 import {
-    errorsMessageErrorConstant, JwtErrorConstant, ProfileListButtonConstant, urls,
+    errorsMessageErrorConstant, ProfileListButtonConstant, urls,
 } from '../../constants';
 import { getOneAlreadyReadThunk, refreshTokenPairThunk } from '../../store';
 import { HttpStatusEnum } from '../../enums';

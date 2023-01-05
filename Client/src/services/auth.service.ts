@@ -6,9 +6,7 @@ import {
     IUserCreate,
     IAuth,
     IRefreshTokenPair,
-    IResponseError,
     IEmail,
-    IForgotPasswordChangePassword,
 } from '../interfaces';
 import { axiosInstance } from './axiosInstance.service';
 import { urls } from '../constants';

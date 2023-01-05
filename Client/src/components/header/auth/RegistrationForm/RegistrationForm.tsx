@@ -9,8 +9,8 @@ import CloseIcon from '@mui/icons-material/Close';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import VisibilityIcon from '@mui/icons-material/Visibility';
-
 import { AxiosError } from 'axios';
+
 import css from './RegistrationForm.module.css';
 import type { ErrorAuthForm } from '../../../../types';
 import { IHandleRegistrationForm, IResponseError, IUserCreate } from '../../../../interfaces';

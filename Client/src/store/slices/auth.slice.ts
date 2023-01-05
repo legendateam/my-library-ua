@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AxiosError } from 'axios';
-import { useNavigate } from 'react-router-dom';
 
 import {
     IAuthPayload,

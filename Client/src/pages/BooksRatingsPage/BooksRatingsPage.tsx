@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { FC, useEffect } from 'react';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import { useSearchParams } from 'react-router-dom';
@@ -7,7 +7,6 @@ import css from './BooksRatingsPage.module.css';
 import { useAppDispatch, useAppSelector, useEffectOnce } from '../../hooks';
 import {
     getAllRatingsThunk,
-    sortBooksByYear,
     sortRatingsByRating,
     sortRatingsByViews,
     sortRatingsByYear,

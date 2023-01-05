@@ -15,7 +15,6 @@ import { createGenreValidator } from '../../../utils';
 import { useAppDispatch, useAppSelector } from '../../../hooks';
 import { refreshTokenPairThunk } from '../../../store';
 import { genreService } from '../../../services';
-import { HttpStatusEnum } from '../../../enums';
 
 export const DeleteGenreForm: FC<ICreateFormProps> = ({ genres }) => {
     const { tokenPair: { clientKey, access, refresh } } = useAppSelector((state) => state.authReducer);

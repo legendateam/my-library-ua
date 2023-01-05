@@ -4,7 +4,6 @@ import ContentPasteIcon from '@mui/icons-material/ContentPaste';
 
 import style from '../Actions/Actions.module.css';
 import {
-    JwtErrorConstant,
     typeRejectAlreadyReadSliceConstant,
 } from '../../../constants';
 import { useAppDispatch, useAppSelector, useEffectOnce } from '../../../hooks';

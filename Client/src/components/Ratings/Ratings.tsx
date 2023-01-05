@@ -3,8 +3,8 @@ import React, {
 } from 'react';
 import { Rating } from '@mui/material';
 import { AxiosError } from 'axios';
-
 import { useNavigate } from 'react-router-dom';
+
 import css from './Ratings.module.css';
 import { IRatingProps, IResponseError } from '../../interfaces';
 import { IRatingsResponse } from '../../interfaces/response/ratings.response.interface';

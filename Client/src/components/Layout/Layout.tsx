@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate } from 'react-router-dom';
-import { Alert, Box } from '@mui/material';
-
+import { Box } from '@mui/material';
 import { AxiosError } from 'axios';
+
 import css from './Layout.module.css';
 import {
     useAppDispatch, useAppSelector, useBlurMode, useEffectOnce,
@@ -15,7 +15,7 @@ import {
 } from '../../services';
 import { IPayload, IResponseError, ITokenPair } from '../../interfaces';
 import { JwtErrorConstant, localStorageConstant } from '../../constants';
-import { HttpMessageEnum, HttpStatusEnum, StatusEnum } from '../../enums';
+import { HttpMessageEnum, HttpStatusEnum } from '../../enums';
 import Footer from '../Footer/Footer';
 import RegistrationForm from '../header/auth/RegistrationForm/RegistrationForm';
 import AuthForm from '../header/auth/AuthForm/AuthForm';

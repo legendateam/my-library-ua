@@ -11,7 +11,7 @@ import {
     updateRemoveFavoriteThunk, updateSetFavoriteThunk,
     refreshTokenPairThunk,
 } from '../../../store';
-import { JwtErrorConstant, typeRejectFavoritesSliceConstant } from '../../../constants';
+import { typeRejectFavoritesSliceConstant } from '../../../constants';
 import { HttpStatusEnum } from '../../../enums';
 
 const Favorites: FC<IBookProps> = ({ book }) => {

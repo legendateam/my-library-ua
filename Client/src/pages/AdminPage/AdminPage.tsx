@@ -5,7 +5,7 @@ import css from './AdminPage.module.css';
 import {
     CreateAuthorForm, CreateBookForm, CreateGenreForm, DeleteGenreForm,
 } from '../../components';
-import { authorService, authService, genreService } from '../../services';
+import { authorService, genreService } from '../../services';
 import { useAppDispatch, useAppSelector, useEffectOnce } from '../../hooks';
 import { IResponseError } from '../../interfaces';
 import { refreshTokenPairThunk } from '../../store';

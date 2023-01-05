@@ -1,5 +1,5 @@
 import { axiosInstance } from './axiosInstance.service';
-import { queryConstant, urls } from '../constants';
+import { urls } from '../constants';
 import { ILikesResponse } from '../interfaces/response/likes.response.interface';
 import {
     IAuth, IDeleteResult, ILikesAndDisLikes, IResponseOK,

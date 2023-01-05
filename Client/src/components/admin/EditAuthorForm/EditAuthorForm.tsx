@@ -15,7 +15,6 @@ import { editAuthorValidator } from '../../../utils';
 import { authorService } from '../../../services';
 import { FileEnum, HttpStatusEnum } from '../../../enums';
 import {
-
     errorAvatarFormatConstant, errorAvatarSizeConstant,
     fileMimetypeConstant,
     fileSizeConstant,

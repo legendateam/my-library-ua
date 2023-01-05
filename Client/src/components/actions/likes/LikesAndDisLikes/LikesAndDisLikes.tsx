@@ -4,7 +4,7 @@ import { AxiosError } from 'axios';
 import css from './LikesAndDisLikes.module.css';
 import DisLikes from '../DisLikes/DisLikes';
 import Likes from '../Likes/Likes';
-import { ILikesAndDisLikesProps, IResponseError } from '../../../../interfaces';
+import { ILikesAndDisLikesProps } from '../../../../interfaces';
 import { likesAndDisLikesService } from '../../../../services';
 import { useEffectOnce } from '../../../../hooks';
 import { HttpStatusEnum } from '../../../../enums';

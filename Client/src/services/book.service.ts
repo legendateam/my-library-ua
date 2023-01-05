@@ -1,7 +1,7 @@
 import {
     IAuth,
     IBook,
-    IBookResponse, IBookTopResponseInterface, IResponseError, IResponseOK,
+    IBookResponse, IBookTopResponseInterface, IResponseOK,
 } from '../interfaces';
 import { axiosInstance } from './axiosInstance.service';
 import { queryConstant, routePathConstant, urls } from '../constants';
